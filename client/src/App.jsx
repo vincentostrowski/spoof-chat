@@ -9,6 +9,7 @@ function App() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log(currentUser);
       setUser(currentUser);
     });
 
@@ -17,7 +18,7 @@ function App() {
   }, []);
 
   if (user) {
-    return <MainApp />;
+    return <MainApp setUser={setUser} />;
   } else {
     return <Auth />;
   }
