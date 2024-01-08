@@ -4,11 +4,18 @@ const admin = require("../utils/firebaseAdmin");
 const createUser = async (request, response) => {
   const { username, name, email, password } = request.body;
 
-  const userRecord = await admin.auth().createUser({
-    email,
-    password,
-    displayName: username,
-  });
+  let userRecord;
+
+  //if requested after googleAuth in client, record will already exist
+  try {
+    userRecord = await admin.auth().getUserByEmail(email);
+  } catch (error) {
+    userRecord = await admin.auth().createUser({
+      email,
+      password,
+      displayName: username,
+    });
+  }
 
   const user = new User({
     username,
