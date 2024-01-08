@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  firebaseUid: String,
+  _id: String,
   contacts: [
     {
       type: mongoose.Schema.Types.ObjectId,

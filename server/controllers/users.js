@@ -21,7 +21,7 @@ const createUser = async (request, response) => {
     username,
     name,
     email,
-    firebaseUid: userRecord.uid,
+    _id: userRecord.uid,
   });
 
   const savedUser = await user.save();
