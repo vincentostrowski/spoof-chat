@@ -8,26 +8,22 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
 
   const signInWithEmail = async (email, password) => {
-    //should alert user who's signedUp with google to sign in with it
-
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-
-      // The error code for accounts created with a Google provider
-      if (errorCode === "auth/account-exists-with-different-credential") {
-        alert(
-          "You've signed up with Google. Select 'Login with Google' at the bottom"
-        );
+      if (error.code === "auth/user-not-found") {
+        alert("There is no user associated with this email.");
+      } else if (error.code === "auth/wrong-password") {
+        alert("The password is incorrect.");
+      } else if (error.code === "auth/invalid-credential") {
+        alert("Invalid credentials");
       } else {
-        console.error(errorCode, errorMessage);
+        alert(error.code, error.message);
       }
     }
   };
 
-  const signInWithGoogle = async () => {
+  /*   const signInWithGoogle = async () => {
     let result;
 
     try {
@@ -57,6 +53,7 @@ const Login = (props) => {
       // is not allowed it seems
     }
   };
+ */
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200">
@@ -94,12 +91,12 @@ const Login = (props) => {
         </button>
       </form>
       <div className="flex justify-between mt-4 gap-9">
-        <button
+        {/* <button
           onClick={signInWithGoogle}
           className="text-blue-500 hover:underline"
         >
           Login with Google
-        </button>
+        </button> */}
         <button
           onClick={props.switchToSignUp}
           className="text-green-500 hover:underline"

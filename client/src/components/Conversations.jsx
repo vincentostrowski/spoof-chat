@@ -31,14 +31,26 @@ const Conversations = (props) => {
 
   return (
     <div className={props.className}>
-      {props.children}
-      <button onClick={handleAddConvoClick}>Add Convo</button>
-      {showNewConversation && (
-        <NewConvo
-          close={setShowNewConversation}
-          onNewConvoAdded={handleNewConvoAdded}
-        />
-      )}
+      <div className="flex flex-col space-y-3 items-center mb-10">
+        <button
+          onClick={props.logout}
+          className="w-3/5 py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:bg-red-700"
+        >
+          Logout
+        </button>
+        <button
+          onClick={handleAddConvoClick}
+          className="w-3/5 py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:bg-red-700"
+        >
+          New Convo
+        </button>
+        {showNewConversation && (
+          <NewConvo
+            close={() => setShowNewConversation(false)}
+            onNewConvoAdded={handleNewConvoAdded}
+          />
+        )}
+      </div>
       <ul className="space-y-4">
         {convos &&
           convos.map((convo) => {
@@ -46,7 +58,7 @@ const Conversations = (props) => {
               <li
                 key={convo._id}
                 onClick={() => props.setConversation(convo)}
-                className="bg-white p-2 rounded"
+                className="bg-white p-2 rounded hover:bg-gray-50 hover:shadow-sm "
               >
                 <ConvoOption convo={convo} />
               </li>

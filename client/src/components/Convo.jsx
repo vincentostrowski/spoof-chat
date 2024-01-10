@@ -3,18 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import { auth } from "../config/firebase-config";
 import Message from "./Message";
 import InputBox from "./InputBox";
-/* 
-How to handle this part?????
--given props.conversation
-
-- to type message will use an input element, form with send (submit button)
-  - maybe this can be it's own component
-
-- how to deal with messages?
-- query DB for all messages with this convo as it's convo field ID
-- start placing them in by time created
-- 
-*/
 
 const Convo = (props) => {
   const [messages, setMessages] = useState([]);
@@ -51,8 +39,7 @@ const Convo = (props) => {
 
   return (
     <div className={`${props.className} flex flex-col justify-between`}>
-      {props.conversation.groupInfo.name}
-
+      <div className="text-center">{props.conversation.groupInfo.name}</div>
       <ul className="space-y-4 overflow-auto ">
         {messages &&
           messages.map((message) => {

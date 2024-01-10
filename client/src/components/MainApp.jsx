@@ -17,14 +17,8 @@ const MainApp = (props) => {
       <Conversations
         setConversation={setConversation}
         className="w-64 bg-gray-100 min-h-screen p-4 overflow-auto"
-      >
-        <button
-          onClick={logout}
-          className="w-full py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:bg-red-700"
-        >
-          Logout
-        </button>
-      </Conversations>
+        logout={logout}
+      />
       {conversation && (
         <Convo
           conversation={conversation}

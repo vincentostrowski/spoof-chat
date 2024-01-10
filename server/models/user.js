@@ -6,18 +6,19 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    lowercase: true,
   },
   name: String,
   profilePictureURL: {
     type: String,
-    default: "/images/profilePic.png",
   },
   email: {
     type: String,
     required: true,
     unique: true,
+    lowercase: true,
   },
-  _id: String,
+  firebaseId: String,
   contacts: [
     {
       type: mongoose.Schema.Types.ObjectId,

@@ -13,6 +13,7 @@ const errorHandler = (error, request, response, next) => {
   } else if (error.me === "User not found") {
     return response.status(404).end();
   }
+
   next(error);
 };
 
@@ -32,7 +33,7 @@ const checkFirebaseToken = async (req, res, next) => {
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
 
-    const user = await User.findOne({ firebaseUid: decodedToken.uid });
+    const user = await User.findOne({ firebaseId: decodedToken.uid });
 
     if (!user) {
       return res.status(404).send("User not found in MongoDB.");
@@ -48,8 +49,21 @@ const checkFirebaseToken = async (req, res, next) => {
   }
 };
 
+const lowercaseFields = (req, res, next) => {
+  if (req.body.username) {
+    req.body.username = req.body.username.toLowerCase();
+  }
+
+  if (req.body.email) {
+    req.body.email = req.body.email.toLowerCase();
+  }
+
+  next();
+};
+
 module.exports = {
   errorHandler,
   unkownEndpoint,
   checkFirebaseToken,
+  lowercaseFields,
 };

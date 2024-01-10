@@ -22,10 +22,11 @@ const SignUp = (props) => {
       setName("");
     } catch (err) {
       console.error(err.message);
+      alert(err.response.data.error);
     }
   };
 
-  const signUpWithGoogle = async () => {
+  /*  const signUpWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleAuthProvider);
 
@@ -43,7 +44,7 @@ const SignUp = (props) => {
       alert("An error occurred while signing in. Please try again.");
       console.error(error);
     }
-  };
+  }; */
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200">
@@ -89,6 +90,7 @@ const SignUp = (props) => {
           required
           className="w-full p-2 mb-4 border border-gray-300 rounded"
           placeholder="Password"
+          minLength="6"
         />
         <button
           type="submit"
@@ -98,12 +100,12 @@ const SignUp = (props) => {
         </button>
       </form>
       <div className="flex justify-between mt-4 gap-9">
-        <button
+        {/* <button
           onClick={signUpWithGoogle}
           className="text-blue-500 hover:underline"
         >
           Sign Up with Google
-        </button>
+        </button> */}
         <button
           onClick={props.switchToLogin}
           className="text-green-500 hover:underline"

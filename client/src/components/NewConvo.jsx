@@ -29,8 +29,7 @@ const NewConvo = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Here you would handle the logic of submitting the values to an endpoint
-    // For example, you might make a POST request to your server with the title and users as the request body
+
     const createConvo = async () => {
       try {
         const body = {
@@ -42,6 +41,15 @@ const NewConvo = (props) => {
         props.onNewConvoAdded();
       } catch (error) {
         console.log(error);
+        if (
+          error.response &&
+          error.response.data &&
+          /^User .* not found$/.test(error.response.data.error)
+        ) {
+          alert(error.response.data.error);
+        } else {
+          alert("Something went wrong, try again");
+        }
       }
     };
 
@@ -49,37 +57,67 @@ const NewConvo = (props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Title:
-        <input
-          type="text"
-          value={title}
-          onChange={handleTitleChange}
-          required
-        />
-      </label>
-      {users.map((user, index) => (
-        <div key={index}>
-          <label>
-            User {index + 1}:
-            <input
-              type="text"
-              value={user}
-              onChange={(event) => handleUserChange(index, event)}
-              required
-            />
-          </label>
-          <button type="button" onClick={() => handleRemoveUser(index)}>
-            Remove User
-          </button>
-        </div>
-      ))}
-      <button type="button" onClick={handleAddUser}>
-        Add Another User
-      </button>
-      <input type="submit" value="Submit" />
-    </form>
+    <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
+      <div className="flex flex-col items-center justify-center pointer-events-auto">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white p-6 rounded shadow-md max-w-md"
+        >
+          <input
+            type="text"
+            value={title}
+            onChange={handleTitleChange}
+            required
+            placeholder="Title"
+            className="w-full p-2 mb-4 border border-gray-300 rounded"
+          />
+          {users.map((user, index) => (
+            <div key={index} className="flex items-center space-x-4 mb-4">
+              <input
+                type="text"
+                value={user}
+                onChange={(event) => handleUserChange(index, event)}
+                required
+                placeholder="Username"
+                className="w-full p-2 border border-gray-300 rounded"
+              />
+              {index > 0 && (
+                <button
+                  type="button"
+                  onClick={() => handleRemoveUser(index)}
+                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+          ))}
+          <div className="flex justify-center">
+            <button
+              type="button"
+              onClick={handleAddUser}
+              className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 mb-4"
+            >
+              Add Another User
+            </button>
+          </div>
+          <div className="flex justify-center gap-2">
+            <button
+              type="submit"
+              className="w-1/3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Submit
+            </button>
+            <button
+              onClick={props.close}
+              className="w-1/3 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            >
+              cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 
