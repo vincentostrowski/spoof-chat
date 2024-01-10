@@ -1,5 +1,8 @@
 import messageService from "../services/messageService";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { auth } from "../config/firebase-config";
+import Message from "./Message";
+import InputBox from "./InputBox";
 /* 
 How to handle this part?????
 -given props.conversation
@@ -16,6 +19,13 @@ How to handle this part?????
 const Convo = (props) => {
   const [messages, setMessages] = useState([]);
   const [pagination, setPagination] = useState({ limit: 10, skip: 0 });
+  const [newMessage, setNewMessage] = useState(false);
+
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView();
+  }, [messages]);
 
   useEffect(() => {
     const loadMessages = async () => {
@@ -37,17 +47,45 @@ const Convo = (props) => {
       setMessages([]);
       setPagination({ limit: 10, skip: 0 });
     };
-  }, [props.conversation.id]);
+  }, [props.conversation.id, newMessage]);
 
   return (
-    <div className={props.className}>
+    <div className={`${props.className} flex flex-col justify-between`}>
       {props.conversation.groupInfo.name}
-      <ul className="space-y-4">
+
+      <ul className="space-y-4 overflow-auto ">
         {messages &&
           messages.map((message) => {
-            return <li key={message._id}>{message.text}</li>;
+            let isUser = false;
+            if (auth.currentUser.uid == message.userfirebaseID) {
+              isUser = true;
+            }
+            return (
+              <li
+                key={message._id}
+                className={`flex ${isUser ? "justify-end" : ""}`}
+              >
+                <Message
+                  message={message}
+                  className={`${
+                    isUser
+                      ? "bg-blue-500 text-white rounded-lg p-2 m-2 inline-block"
+                      : "bg-gray-300 rounded-lg p-2 m-2 inline-block"
+                  }`}
+                  isUser={isUser}
+                  //pass isUser so maybe Messages will render different
+                />
+              </li>
+            );
           })}
+        <div ref={messagesEndRef} />
       </ul>
+      <InputBox
+        className=""
+        conversation={props.conversation}
+        setNewMessage={setNewMessage}
+        newMessage={newMessage}
+      />
     </div>
   );
 };

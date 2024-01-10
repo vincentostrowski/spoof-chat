@@ -3,7 +3,7 @@ import convoService from "../services/convoService";
 
 const NewConvo = (props) => {
   const [title, setTitle] = useState("");
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([""]);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);

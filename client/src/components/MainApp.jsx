@@ -13,10 +13,10 @@ const MainApp = (props) => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex h-screen">
       <Conversations
         setConversation={setConversation}
-        className="w-64 bg-gray-100 min-h-screen p-4"
+        className="w-64 bg-gray-100 min-h-screen p-4 overflow-auto"
       >
         <button
           onClick={logout}
@@ -26,7 +26,10 @@ const MainApp = (props) => {
         </button>
       </Conversations>
       {conversation && (
-        <Convo conversation={conversation} className="flex-grow bg-white p-4" />
+        <Convo
+          conversation={conversation}
+          className="flex-grow bg-white p-4 overflow-auto"
+        />
       )}
     </div>
   );
