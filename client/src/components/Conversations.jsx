@@ -58,7 +58,7 @@ const Conversations = (props) => {
               <li
                 key={convo._id}
                 onClick={() => props.setConversation(convo)}
-                className="bg-white p-2 rounded hover:bg-gray-50 hover:shadow-sm "
+                className="bg-white p-2 rounded hover:bg-gray-50 hover:shadow-sm cursor-pointer"
               >
                 <ConvoOption convo={convo} />
               </li>

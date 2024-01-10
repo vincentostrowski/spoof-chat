@@ -58,19 +58,21 @@ const NewConvo = (props) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
-      <div className="flex flex-col items-center justify-center pointer-events-auto">
+      <div className="flex flex-col items-center justify-center pointer-events-auto w-full max-w-md">
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-6 rounded shadow-md max-w-md"
+          className="bg-white p-6 rounded shadow-md max-w-md w-full"
         >
-          <input
-            type="text"
-            value={title}
-            onChange={handleTitleChange}
-            required
-            placeholder="Title"
-            className="w-full p-2 mb-4 border border-gray-300 rounded"
-          />
+          {users.length > 1 && (
+            <input
+              type="text"
+              value={title}
+              onChange={handleTitleChange}
+              required
+              placeholder="Title"
+              className="w-full p-2 mb-4 border border-gray-300 rounded"
+            />
+          )}
           {users.map((user, index) => (
             <div key={index} className="flex items-center space-x-4 mb-4">
               <input
@@ -92,6 +94,7 @@ const NewConvo = (props) => {
               )}
             </div>
           ))}
+
           <div className="flex justify-center">
             <button
               type="button"
