@@ -5,6 +5,16 @@ const mongoose = require("mongoose");
 const createConversation = async (req, res) => {
   const body = req.body;
   const participants = [req.user._id];
+  console.log(body.participants);
+
+  if (body.participants.length === 1) {
+    let user = await User.findOne({ username: body.participants[0] });
+    if (user) {
+      body.name = user.username;
+    } else {
+      return res.status(404).json({ error: `User not found` });
+    }
+  }
 
   for (let username of body.participants) {
     let user = await User.findOne({ username: username });
