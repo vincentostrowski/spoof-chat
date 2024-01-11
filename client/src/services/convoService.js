@@ -1,6 +1,6 @@
 import axios from "axios";
 import { auth } from "../config/firebase-config";
-const baseUrl = "http://localhost:3003/api/conversations";
+const baseUrl = `${import.meta.env.VITE_BASEURL}/api/conversations/`;
 
 const getAll = async () => {
   const token = await auth.currentUser.getIdToken();
