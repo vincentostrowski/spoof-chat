@@ -2,6 +2,7 @@ import userService from "../services/userService";
 import { useState } from "react";
 import { auth, googleAuthProvider } from "../config/firebase-config";
 import { signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
+import logo from "../../public/SpoofLogo.png";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
@@ -64,7 +65,12 @@ const Login = (props) => {
           signInWithEmail(email, password);
         }}
       >
-        <h2 className="mb-4 text-2xl font-bold text-gray-700 text-center">
+        <img
+          src={logo}
+          alt="Website Logo"
+          className="h-20 w-auto mb-5 mx-auto"
+        />
+        <h2 className="mb-4 text-xl font-bold text-gray-500 text-center">
           Login
         </h2>
         <input

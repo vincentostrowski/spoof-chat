@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import ConvoOption from "./ConvoOption";
 import convoService from "../services/convoService";
 import NewConvo from "./NewConvo";
+import ProfilePic from "./ProfilePic";
+import logo from "../../public/SpoofLogo.png";
 
 const Conversations = (props) => {
   const [convos, setConvos] = useState();
@@ -32,6 +34,8 @@ const Conversations = (props) => {
   return (
     <div className={props.className}>
       <div className="flex flex-col space-y-3 items-center mb-10">
+        <img src={logo} alt="Website Logo" className="h-10 w-auto mx-auto" />
+        <ProfilePic user="" className="w-20 h-20" />
         <button
           onClick={props.logout}
           className="w-3/5 py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:bg-red-700"

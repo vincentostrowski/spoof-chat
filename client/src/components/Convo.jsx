@@ -56,11 +56,10 @@ const Convo = (props) => {
                   message={message}
                   className={`${
                     isUser
-                      ? "bg-blue-500 text-white rounded-lg p-2 m-2 inline-block"
-                      : "bg-gray-300 rounded-lg p-2 m-2 inline-block"
+                      ? "bg-blue-500 text-white rounded-lg p-2 mx-2 mb-2 inline-block"
+                      : "bg-gray-300 rounded-lg p-2 mx-2 mb-2 inline-block"
                   }`}
                   isUser={isUser}
-                  //pass isUser so maybe Messages will render different
                 />
               </li>
             );

@@ -2,6 +2,7 @@ import { useState } from "react";
 import userService from "../services/userService";
 import { auth, googleAuthProvider } from "../config/firebase-config";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import logo from "../../public/SpoofLogo.png";
 
 const SignUp = (props) => {
   const [username, setUsername] = useState("");
@@ -52,7 +53,12 @@ const SignUp = (props) => {
         className="bg-white p-6 rounded shadow-md max-w-md"
         onSubmit={handleSubmit}
       >
-        <h2 className="mb-4 text-2xl font-bold text-gray-700 text-center">
+        <img
+          src={logo}
+          alt="Website Logo"
+          className="h-20 w-auto mb-5 mx-auto"
+        />
+        <h2 className="mb-4 text-xl font-bold text-gray-500 text-center">
           Create Account
         </h2>
         <input
