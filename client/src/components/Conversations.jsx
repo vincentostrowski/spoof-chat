@@ -3,7 +3,7 @@ import ConvoOption from "./ConvoOption";
 import convoService from "../services/convoService";
 import NewConvo from "./NewConvo";
 import ProfilePic from "./ProfilePic";
-import logo from "../../public/SpoofLogo.png";
+import logo from "../../public/logoTEST.png";
 
 const Conversations = (props) => {
   const [convos, setConvos] = useState();
