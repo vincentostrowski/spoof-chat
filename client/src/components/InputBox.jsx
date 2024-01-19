@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import messageService from "../services/messageService";
 
-const InputBox = (props) => {
+const InputBox = ({ conversation, setNewMessage, newMessage, className }) => {
   const [text, setText] = useState("");
   const textareaRef = useRef(null);
 
@@ -16,16 +16,16 @@ const InputBox = (props) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      await messageService.create(props.conversation.id, { text });
+      await messageService.create(conversation.id, { text });
       setText("");
-      props.setNewMessage(!props.newMessage);
+      setNewMessage(!newMessage);
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className={`${props.className} bg-gray-200 p-2 rounded`}>
+    <div className={`${className} bg-gray-200 p-2 rounded`}>
       <form onSubmit={onSubmit} className="flex justify-center gap-3">
         <textarea
           ref={textareaRef}

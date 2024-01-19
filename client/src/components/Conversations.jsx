@@ -7,7 +7,7 @@ import logo from "../../public/logoTEST.png";
 import { UserDocContext } from "../App";
 import UpdateProfile from "./UpdateProfile";
 
-const Conversations = (props) => {
+const Conversations = ({ className, setConversation, logout }) => {
   const [convos, setConvos] = useState();
   const [showNewConversation, setShowNewConversation] = useState(false);
   const [showUpdateProfile, setShowUpdateProfile] = useState(false);
@@ -40,7 +40,7 @@ const Conversations = (props) => {
   };
 
   return (
-    <div className={props.className}>
+    <div className={className}>
       <div className="flex flex-col space-y-3 items-center mb-10">
         <div className="w-full">
           <img
@@ -51,7 +51,7 @@ const Conversations = (props) => {
         </div>
         <ProfilePic user={userDoc} className="w-20 h-20" />
         <button
-          onClick={props.logout}
+          onClick={logout}
           className="w-3/5 py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:bg-red-700"
         >
           Logout
@@ -84,7 +84,7 @@ const Conversations = (props) => {
             return (
               <li
                 key={convo._id}
-                onClick={() => props.setConversation(convo)}
+                onClick={() => setConversation(convo)}
                 className="bg-white p-2 rounded hover:bg-gray-50 hover:shadow-sm cursor-pointer"
               >
                 <ConvoOption convo={convo} />

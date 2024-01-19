@@ -6,7 +6,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../config/firebase-config";
 import { getAuth } from "firebase/auth";
 
-const UpdateProfile = (props) => {
+const UpdateProfile = ({ close }) => {
   const [profilePicture, setProfilePicture] = useState();
   const userDoc = useContext(UserDocContext);
   const [username, setUsername] = useState(userDoc.username);
@@ -38,7 +38,7 @@ const UpdateProfile = (props) => {
         username,
       });
       console.log("works");
-      props.close();
+      close();
     } catch (error) {
       console.log(error);
     }
@@ -75,7 +75,7 @@ const UpdateProfile = (props) => {
           ></input>
           <button type="submit">Save Changes</button>
           <button
-            onClick={props.close}
+            onClick={close}
             className="w-1/3 py-2 bg-red-500 text-white rounded hover:bg-red-600"
           >
             cancel

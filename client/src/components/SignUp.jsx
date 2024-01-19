@@ -1,10 +1,10 @@
 import { useState } from "react";
 import userService from "../services/userService";
-import { auth, googleAuthProvider } from "../config/firebase-config";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth } from "../config/firebase-config";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import logo from "../../public/SpoofLogo.png";
 
-const SignUp = (props) => {
+const SignUp = ({ switchToLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -24,26 +24,6 @@ const SignUp = (props) => {
       alert(err.response.data.error);
     }
   };
-
-  /*  const signUpWithGoogle = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleAuthProvider);
-
-      //If new user created, sending user to endpoint to create MongoDB document
-      const user = result.user;
-      const creationTime = new Date(user.metadata.creationTime);
-      const lastSignInTime = new Date(user.metadata.lastSignInTime);
-      if (creationTime.getTime() === lastSignInTime.getTime()) {
-        userService.create({
-          username: user.displayName,
-          email: user.email,
-        });
-      }
-    } catch (error) {
-      alert("An error occurred while signing in. Please try again.");
-      console.error(error);
-    }
-  }; */
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200">
@@ -95,14 +75,8 @@ const SignUp = (props) => {
         </button>
       </form>
       <div className="flex justify-between mt-4 gap-9">
-        {/* <button
-          onClick={signUpWithGoogle}
-          className="text-blue-500 hover:underline"
-        >
-          Sign Up with Google
-        </button> */}
         <button
-          onClick={props.switchToLogin}
+          onClick={switchToLogin}
           className="text-green-500 hover:underline"
         >
           Already have an account? Log In

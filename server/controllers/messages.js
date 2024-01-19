@@ -2,15 +2,11 @@ const Message = require("../models/message");
 
 const getMessages = async (req, res) => {
   const conversationId = req.params.id;
-  /* const { limit = 10, skip = 0 } = req.query; */
-
   try {
     const messages = await Message.find({ conversation: conversationId }).sort({
       createdAt: 1,
       _id: 1,
     });
-    /* .skip(parseInt(skip))
-      .limit(parseInt(limit)); */
     console.log(messages);
     res.json(messages);
   } catch (error) {

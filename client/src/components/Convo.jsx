@@ -1,31 +1,16 @@
 import messageService from "../services/messageService";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { auth } from "../config/firebase-config";
 import Message from "./Message";
 import InputBox from "./InputBox";
 
-const Convo = (props) => {
+const Convo = ({ conversation, className }) => {
   const [messages, setMessages] = useState([]);
-  const [pagination, setPagination] = useState({ limit: 10, skip: 0 });
   const [newMessage, setNewMessage] = useState(false);
-
-  const messagesEndRef = useRef(null);
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView();
-  }, [messages]);
 
   useEffect(() => {
     const loadMessages = async () => {
-      const { data } = await messageService.getAll(
-        props.conversation.id,
-        pagination
-      );
-      //FIGURE OUT HOW TO uSE PAGINATION & SKIP & LIMIT
-      /* setMessages();
-      setPagination(); */
-
-      //until then ^ just use below to set
+      const { data } = await messageService.getAll(conversation.id);
       setMessages(data);
     };
 
@@ -33,13 +18,12 @@ const Convo = (props) => {
     //cleanup so when props.conversation.id changes, rendered messages removed right away
     return () => {
       setMessages([]);
-      setPagination({ limit: 10, skip: 0 });
     };
-  }, [props.conversation.id, newMessage]);
+  }, [conversation.id, newMessage]);
 
   return (
-    <div className={`${props.className} flex flex-col justify-between`}>
-      <div className="text-center">{props.conversation.groupInfo.name}</div>
+    <div className={`${className} flex flex-col justify-between`}>
+      <div className="text-center">{conversation.groupInfo.name}</div>
       <ul className="space-y-4 overflow-auto ">
         {messages &&
           messages.map((message) => {
@@ -64,11 +48,10 @@ const Convo = (props) => {
               </li>
             );
           })}
-        <div ref={messagesEndRef} />
       </ul>
       <InputBox
         className=""
-        conversation={props.conversation}
+        conversation={conversation}
         setNewMessage={setNewMessage}
         newMessage={newMessage}
       />

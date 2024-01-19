@@ -1,7 +1,7 @@
 import { useState } from "react";
 import convoService from "../services/convoService";
 
-const NewConvo = (props) => {
+const NewConvo = ({ close, onNewConvoAdded }) => {
   const [title, setTitle] = useState("");
   const [users, setUsers] = useState([""]);
 
@@ -37,8 +37,8 @@ const NewConvo = (props) => {
           participants: users,
         };
         await convoService.create(body);
-        props.close();
-        props.onNewConvoAdded();
+        close();
+        onNewConvoAdded();
       } catch (error) {
         console.log(error);
         if (
@@ -112,7 +112,7 @@ const NewConvo = (props) => {
               Submit
             </button>
             <button
-              onClick={props.close}
+              onClick={close}
               className="w-1/3 py-2 bg-red-500 text-white rounded hover:bg-red-600"
             >
               cancel

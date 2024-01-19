@@ -4,12 +4,12 @@ import Conversations from "./Conversations";
 import Convo from "./Convo";
 import { useState } from "react";
 
-const MainApp = (props) => {
+const MainApp = ({ setUser }) => {
   const [conversation, setConversation] = useState();
 
   const logout = async () => {
     await signOut(auth);
-    props.setUser(null);
+    setUser(null);
   };
 
   return (
