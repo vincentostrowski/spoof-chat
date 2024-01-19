@@ -20,6 +20,7 @@ const createUser = async (request, response) => {
         name,
         email,
         firebaseId: userRecord.uid,
+        profilePictureURL: "gs://splitchat-fdadc.appspot.com/user.jpg",
       });
 
       const savedUser = await user.save();
@@ -77,14 +78,33 @@ const getUser = async (request, response) => {
   response.status(200).json(user);
 };
 
+const getUserFirebaseUID = async (request, response) => {
+  response.status(200).json(request.user);
+};
+
 const updateUser = async (request, response) => {
-  const user = await User.findByIdAndUpdate(request.user.id, request.body, {
-    new: true,
-  });
-  if (!user) {
-    throw new Error("User not found");
+  try {
+    const { profilePictureURL, username } = request.body;
+    const user = request.user;
+    if (username != user.username) {
+      user.username = username;
+    }
+
+    if (profilePictureURL) {
+      user.profilePictureURL = profilePictureURL;
+    }
+
+    await user.save();
+    response.status(200).json(user);
+  } catch (error) {
+    if (error.code === 11000) {
+      response.status(400).json({ message: "Username is already in use" });
+    } else {
+      response
+        .status(500)
+        .json({ message: "An error occurred while updating your profile" });
+    }
   }
-  response.status(200).json(user);
 };
 
 const deleteUser = async (request, response) => {
@@ -98,6 +118,7 @@ const deleteUser = async (request, response) => {
 module.exports = {
   createUser,
   getUser,
+  getUserFirebaseUID,
   getUsers,
   updateUser,
   deleteUser,

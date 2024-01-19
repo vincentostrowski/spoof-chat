@@ -19,6 +19,8 @@ const conversationSchema = new mongoose.Schema({
   },
 });
 
+conversationSchema.index({ participants: 1 });
+
 conversationSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();

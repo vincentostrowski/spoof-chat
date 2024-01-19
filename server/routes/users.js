@@ -9,6 +9,7 @@ usersRouter.post("/", userController.createUser);
 //routes that need authentication
 usersRouter.use(checkFirebaseToken);
 usersRouter.get("/", userController.getUsers);
+usersRouter.get("/firebase", userController.getUserFirebaseUID);
 usersRouter.get("/:id", userController.getUser);
 usersRouter.put("/:id", userController.updateUser);
 usersRouter.delete("/:id", userController.deleteUser);

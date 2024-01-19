@@ -1,11 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, createContext } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebase-config";
 import MainApp from "./components/MainApp";
 import Auth from "./components/Auth";
+import userService from "./services/userService";
+
+export const UserDocContext = createContext();
 
 function App() {
   const [user, setUser] = useState(null);
+  const [userDoc, setUserDoc] = useState(null);
+
+  useEffect(() => {
+    const getUserDoc = async () => {
+      if (user) {
+        try {
+          const response = await userService.getUserFirebaseUID();
+          setUserDoc(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+    getUserDoc();
+    //fetch the user doc
+    //set context api so that each document has access to this user doc
+  }, [user]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -17,7 +38,11 @@ function App() {
   }, []);
 
   if (user) {
-    return <MainApp setUser={setUser} />;
+    return (
+      <UserDocContext.Provider value={userDoc}>
+        <MainApp setUser={setUser} />
+      </UserDocContext.Provider>
+    );
   } else {
     return <Auth />;
   }

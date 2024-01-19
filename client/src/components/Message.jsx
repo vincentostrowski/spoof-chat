@@ -3,16 +3,16 @@ import { useEffect, useState } from "react";
 import userService from "../services/userService";
 
 const Message = (props) => {
-  const [name, setName] = useState();
+  const [user, setUser] = useState();
 
   useEffect(() => {
-    const getName = async () => {
+    const getUser = async () => {
       const user = await userService.getUser(props.message.user);
       console.log();
-      setName(user.data.username);
+      setUser(user.data);
     };
 
-    getName();
+    getUser();
   }, []);
 
   return (
@@ -20,13 +20,14 @@ const Message = (props) => {
       {props.isUser ? null : (
         <ProfilePic
           className="w-7 h-7 mt-auto"
-          letter={name ? name.charAt(0) : ""}
+          letter={user ? user.name.charAt(0) : ""}
+          user={user}
         />
       )}
       <div className="flex flex-col m-0 p-0">
         {props.isUser ? null : (
           <div className=" text-xs text-gray-400 mx-3 mb-1">
-            {name ? name : "..."}
+            {user ? user.name : "..."}
           </div>
         )}
         <div

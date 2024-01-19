@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import ConvoOption from "./ConvoOption";
 import convoService from "../services/convoService";
 import NewConvo from "./NewConvo";
 import ProfilePic from "./ProfilePic";
 import logo from "../../public/logoTEST.png";
+import { UserDocContext } from "../App";
+import UpdateProfile from "./UpdateProfile";
 
 const Conversations = (props) => {
   const [convos, setConvos] = useState();
   const [showNewConversation, setShowNewConversation] = useState(false);
+  const [showUpdateProfile, setShowUpdateProfile] = useState(false);
   const [refreshConvos, setRefreshConvos] = useState(false);
+  const userDoc = useContext(UserDocContext);
 
   useEffect(() => {
     const fetchConvos = async () => {
@@ -27,6 +31,10 @@ const Conversations = (props) => {
     setShowNewConversation(true);
   };
 
+  const handleUpdateProfileClick = () => {
+    setShowUpdateProfile(true);
+  };
+
   const handleNewConvoAdded = () => {
     setRefreshConvos(!refreshConvos);
   };
@@ -34,14 +42,29 @@ const Conversations = (props) => {
   return (
     <div className={props.className}>
       <div className="flex flex-col space-y-3 items-center mb-10">
-        <img src={logo} alt="Website Logo" className="h-10 w-auto mx-auto" />
-        <ProfilePic user="" className="w-20 h-20" />
+        <div className="w-full">
+          <img
+            src={logo}
+            alt="Website Logo"
+            className="h-10 w-auto self-start"
+          />
+        </div>
+        <ProfilePic user={userDoc} className="w-20 h-20" />
         <button
           onClick={props.logout}
           className="w-3/5 py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:bg-red-700"
         >
           Logout
         </button>
+        <button
+          onClick={handleUpdateProfileClick}
+          className="w-3/5 py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:bg-red-700"
+        >
+          Update Profile
+        </button>
+        {showUpdateProfile && (
+          <UpdateProfile close={() => setShowUpdateProfile(false)} />
+        )}
         <button
           onClick={handleAddConvoClick}
           className="w-3/5 py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:bg-red-700"

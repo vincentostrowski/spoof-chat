@@ -53,12 +53,16 @@ const createConversation = async (req, res) => {
   }
 };
 
-/* const getConversation = async (req, res) => {}; */
-
-//Get conversations for a logged in user
 const getUserConversations = async (req, res) => {
-  await req.user.populate("conversations");
-  res.json(req.user.conversations);
+  try {
+    const userId = req.user.id;
+    const conversations = await Conversation.find({
+      participants: { $in: [userId] },
+    }).populate("participants");
+    res.json(conversations);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 module.exports = {
