@@ -2,7 +2,7 @@ const User = require("../models/user");
 const admin = require("../utils/firebaseAdmin");
 
 const createUser = async (request, response) => {
-  const { username, name, email, password } = request.body;
+  const { username, email, password } = request.body;
 
   //creating both user in Mongo & FireBase
   try {
@@ -17,7 +17,6 @@ const createUser = async (request, response) => {
     try {
       const user = new User({
         username,
-        name,
         email,
         firebaseId: userRecord.uid,
         profilePictureURL: "gs://splitchat-fdadc.appspot.com/user.jpg",
@@ -55,11 +54,7 @@ const getUsers = async (request, response) => {
     // Use a case-insensitive regular expression to search for users
     const searchRegex = new RegExp(search, "i");
     users = await User.find({
-      $or: [
-        { username: searchRegex },
-        { name: searchRegex },
-        { email: searchRegex },
-      ],
+      $or: [{ username: searchRegex }, { email: searchRegex }],
     });
   } else {
     users = await User.find({})

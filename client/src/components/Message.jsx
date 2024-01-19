@@ -20,14 +20,14 @@ const Message = (props) => {
       {props.isUser ? null : (
         <ProfilePic
           className="w-7 h-7 mt-auto"
-          letter={user ? user.name.charAt(0) : ""}
+          letter={user ? user.username.charAt(0) : ""}
           user={user}
         />
       )}
       <div className="flex flex-col m-0 p-0">
         {props.isUser ? null : (
           <div className=" text-xs text-gray-400 mx-3 mb-1">
-            {user ? user.name : "..."}
+            {user ? user.username : "..."}
           </div>
         )}
         <div

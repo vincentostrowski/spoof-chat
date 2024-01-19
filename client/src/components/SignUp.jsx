@@ -8,19 +8,17 @@ const SignUp = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const body = { username, password, email, name };
+      const body = { username, password, email };
       await userService.create(body);
       await signInWithEmailAndPassword(auth, email, password);
 
       setUsername("");
       setPassword("");
       setEmail("");
-      setName("");
     } catch (err) {
       console.error(err.message);
       alert(err.response.data.error);
@@ -61,15 +59,6 @@ const SignUp = (props) => {
         <h2 className="mb-4 text-xl font-bold text-gray-500 text-center">
           Create Account
         </h2>
-        <input
-          className="w-full p-2 mb-4 border border-gray-300 rounded"
-          type="text"
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-          placeholder="Name"
-        />
         <input
           type="email"
           id="email"
