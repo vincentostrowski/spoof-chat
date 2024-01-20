@@ -8,15 +8,17 @@ import { SocketContext } from "../SocketProvider";
 
 const Convo = ({ conversation, className }) => {
   const [messages, setMessages] = useState([]);
-  /* const socket = useContext(SocketContext);
+  const socket = useContext(SocketContext);
 
   useEffect(() => {
     const handleNewMessage = (newMessage) => {
-      setMessages([...messages, newMessage]);
+      setMessages((currentMessages) => [...currentMessages, newMessage]);
     };
-    socket.on("newMessage");
-  });
- */
+    socket.on("newMessage", handleNewMessage);
+    return () => {
+      socket.off("newMessage", handleNewMessage);
+    };
+  }, []);
 
   useEffect(() => {
     const loadMessages = async () => {

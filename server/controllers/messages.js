@@ -1,4 +1,5 @@
 const Message = require("../models/message");
+const io = require("../socket.js").getIO();
 
 const getMessages = async (req, res) => {
   const conversationId = req.params.id;
@@ -28,9 +29,13 @@ const createMessage = async (req, res) => {
 
   try {
     const savedMessage = await message.save();
+    await io
+      .to(`conversation-${conversationId}`)
+      .emit("newMessage", savedMessage);
     res.status(201).json(savedMessage);
   } catch (error) {
     res.status(500).json({ error: error.message });
+    console.log(error);
   }
 };
 

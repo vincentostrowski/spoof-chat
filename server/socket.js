@@ -12,7 +12,6 @@ module.exports = {
     });
     io.on("connection", (socket) => {
       console.log("A user connected");
-      console.log(socket.id);
 
       const userId = socket.handshake.query.userId;
       users[userId] = socket;
