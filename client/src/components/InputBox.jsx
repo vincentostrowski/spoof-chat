@@ -7,6 +7,9 @@ import { getAuth } from "firebase/auth";
 import ProfilePic from "./ProfilePic";
 import ProfilePicTester from "./ProfilePicTester";
 
+import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
+
 const InputBox = ({ conversation, className }) => {
   const [text, setText] = useState("");
   const user = useContext(UserDocContext);
@@ -15,9 +18,7 @@ const InputBox = ({ conversation, className }) => {
   //eventually getting passed to profile pic which fetches from firebae
   const [avatarURL, setAvatarURL] = useState(user.profilePictureURL);
   const [onFirebase, setOnFirebase] = useState(true);
-  //a just uploaded file doesn't need to be fetched from firebase
-  //and will have to go through firebase upload on submission
-
+  const [openEmojis, setOpenEmojis] = useState(false);
   const textareaRef = useRef(null);
 
   useEffect(() => {
@@ -32,6 +33,7 @@ const InputBox = ({ conversation, className }) => {
   //then with the returned link from the upload, storing it in the model
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (text === "") return;
     try {
       const uploadedURL = onFirebase
         ? avatarURL
@@ -72,8 +74,12 @@ const InputBox = ({ conversation, className }) => {
     setOnFirebase(false);
   };
 
+  const handleEmojiSelect = (emoji) => {
+    setText((prevText) => prevText + emoji.native);
+  };
+
   return (
-    <div className={`${className} bg-gray-200 p-2 rounded w-full`}>
+    <div className={`${className} bg-gray-200 p-2 rounded w-full h-30`}>
       <form onSubmit={onSubmit} className="flex gap-3">
         <div className="flex flex-col justify-center items-center">
           <input
@@ -102,13 +108,13 @@ const InputBox = ({ conversation, className }) => {
             <input id="fileUpload" type="file" onChange={handleFileChange} />
           </div>
         </div>
-        <div>
+        <div className="flex flex-grow">
           <textarea
             ref={textareaRef}
             placeholder="Enter a message..."
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="w-4/5 h-10 resize-none overflow-auto"
+            className="w-4/5 h-10 resize-none overflow-auto flex-grow"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
@@ -118,7 +124,32 @@ const InputBox = ({ conversation, className }) => {
               }
             }}
           />
-          <button>Send</button>
+          {openEmojis && (
+            <div className="absolute z-10 bottom-36">
+              <Picker
+                data={data}
+                onEmojiSelect={handleEmojiSelect}
+                onClickOutside={() => {
+                  if (openEmojis) {
+                    console.log(openEmojis);
+                    setOpenEmojis(false);
+                  }
+                }}
+              />
+            </div>
+          )}
+          <div className="flex items-start gap-4">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenEmojis(!openEmojis);
+              }}
+            >
+              😊
+            </button>
+            <button>Send</button>
+          </div>
         </div>
       </form>
     </div>

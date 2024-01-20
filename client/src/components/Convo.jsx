@@ -70,7 +70,7 @@ const Convo = ({ conversation, className }) => {
             );
           })}
       </ul>
-      <InputBox className="" conversation={conversation} />
+      <InputBox conversation={conversation} />
     </div>
   );
 };
