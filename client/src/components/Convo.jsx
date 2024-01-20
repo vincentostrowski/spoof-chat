@@ -49,7 +49,7 @@ const Convo = ({ conversation, className }) => {
         {messages &&
           messages.map((message) => {
             let isUser = false;
-            if (message.user === userDoc.id) {
+            if (message.user.id === userDoc.id) {
               isUser = true;
             }
             return (

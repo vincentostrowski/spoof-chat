@@ -4,10 +4,12 @@ const io = require("../socket.js").getIO();
 const getMessages = async (req, res) => {
   const conversationId = req.params.id;
   try {
-    const messages = await Message.find({ conversation: conversationId }).sort({
-      createdAt: 1,
-      _id: 1,
-    });
+    const messages = await Message.find({ conversation: conversationId })
+      .sort({
+        createdAt: 1,
+        _id: 1,
+      })
+      .populate("user");
     res.json(messages);
   } catch (error) {
     res.status(500).json({ error: error.message });
