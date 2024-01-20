@@ -1,11 +1,15 @@
 require("./utils/firebaseAdmin");
 const express = require("express");
 const app = express();
+const http = require("http");
+const socket = require("./socket.js");
+const server = http.createServer(app);
+socket.init(server);
+const cors = require("cors");
 require("express-async-errors");
 const mongoose = require("mongoose");
 const config = require("./utils/config");
 const middleware = require("./utils/middleware");
-const cors = require("cors");
 const usersRouter = require("./routes/users");
 const conversationsRouter = require("./routes/conversations");
 const messagesRouter = require("./routes/messages");
@@ -24,4 +28,4 @@ app.use("/api", messagesRouter);
 app.use(middleware.unkownEndpoint);
 app.use(middleware.errorHandler);
 
-module.exports = app;
+module.exports = server;

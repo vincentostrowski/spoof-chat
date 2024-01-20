@@ -7,7 +7,6 @@ const getMessages = async (req, res) => {
       createdAt: 1,
       _id: 1,
     });
-    console.log(messages);
     res.json(messages);
   } catch (error) {
     res.status(500).json({ error: error.message });

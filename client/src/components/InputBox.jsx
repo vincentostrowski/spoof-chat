@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import messageService from "../services/messageService";
 
-const InputBox = ({ conversation, setNewMessage, newMessage, className }) => {
+const InputBox = ({ conversation, className }) => {
   const [text, setText] = useState("");
   const textareaRef = useRef(null);
 
@@ -18,7 +18,6 @@ const InputBox = ({ conversation, setNewMessage, newMessage, className }) => {
     try {
       await messageService.create(conversation.id, { text });
       setText("");
-      setNewMessage(!newMessage);
     } catch (error) {
       console.log(error);
     }

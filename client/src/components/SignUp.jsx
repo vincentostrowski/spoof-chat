@@ -2,7 +2,7 @@ import { useState } from "react";
 import userService from "../services/userService";
 import { auth } from "../config/firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import logo from "../../public/SpoofLogo.png";
+import logo from "../assets/SpoofLogo.png";
 
 const SignUp = ({ switchToLogin }) => {
   const [username, setUsername] = useState("");

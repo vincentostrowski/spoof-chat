@@ -4,6 +4,7 @@ import { auth } from "./config/firebase-config";
 import MainApp from "./components/MainApp";
 import Auth from "./components/Auth";
 import userService from "./services/userService";
+import { SocketProvider } from "./SocketProvider.jsx";
 
 export const UserDocContext = createContext();
 
@@ -37,11 +38,13 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  if (user) {
+  if (user && userDoc) {
     return (
-      <UserDocContext.Provider value={userDoc}>
-        <MainApp setUser={setUser} />
-      </UserDocContext.Provider>
+      <SocketProvider userId={userDoc.id}>
+        <UserDocContext.Provider value={userDoc}>
+          <MainApp setUser={setUser} />
+        </UserDocContext.Provider>
+      </SocketProvider>
     );
   } else {
     return <Auth />;

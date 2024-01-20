@@ -3,29 +3,49 @@ import ConvoOption from "./ConvoOption";
 import convoService from "../services/convoService";
 import NewConvo from "./NewConvo";
 import ProfilePic from "./ProfilePic";
-import logo from "../../public/logoTEST.png";
+import logo from "../assets/logoTEST.png";
 import { UserDocContext } from "../App";
 import UpdateProfile from "./UpdateProfile";
+import { SocketContext } from "../SocketProvider";
 
 const Conversations = ({ className, setConversation, logout }) => {
   const [convos, setConvos] = useState();
   const [showNewConversation, setShowNewConversation] = useState(false);
   const [showUpdateProfile, setShowUpdateProfile] = useState(false);
-  const [refreshConvos, setRefreshConvos] = useState(false);
   const userDoc = useContext(UserDocContext);
+  const socket = useContext(SocketContext);
 
   useEffect(() => {
     const fetchConvos = async () => {
       try {
         const result = await convoService.getAll();
-        setConvos(result.data);
+        const returnedConvos = result.data;
+        setConvos(returnedConvos);
+
+        //for each of these convos as well,
+        //join group using convo id
+        //this cannot be done on client side, so we
+        returnedConvos.forEach((convo) => {
+          socket.emit("join", `conversation-${convo.id}`);
+        });
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchConvos();
-  }, [refreshConvos]);
+  }, []);
+
+  useEffect(() => {
+    const handleNewConvo = (newConvo) => {
+      setConvos((convos) => [...convos, newConvo]);
+    };
+
+    socket.on("newConvo", handleNewConvo);
+    return () => {
+      socket.off("newConvo", handleNewConvo);
+    };
+  }, []);
 
   const handleAddConvoClick = () => {
     setShowNewConversation(true);
@@ -33,10 +53,6 @@ const Conversations = ({ className, setConversation, logout }) => {
 
   const handleUpdateProfileClick = () => {
     setShowUpdateProfile(true);
-  };
-
-  const handleNewConvoAdded = () => {
-    setRefreshConvos(!refreshConvos);
   };
 
   return (
@@ -72,10 +88,7 @@ const Conversations = ({ className, setConversation, logout }) => {
           New Convo
         </button>
         {showNewConversation && (
-          <NewConvo
-            close={() => setShowNewConversation(false)}
-            onNewConvoAdded={handleNewConvoAdded}
-          />
+          <NewConvo close={() => setShowNewConversation(false)} />
         )}
       </div>
       <ul className="space-y-4">

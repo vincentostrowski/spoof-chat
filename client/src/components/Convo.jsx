@@ -3,10 +3,20 @@ import { useState, useEffect } from "react";
 import { auth } from "../config/firebase-config";
 import Message from "./Message";
 import InputBox from "./InputBox";
+import { useContext } from "react";
+import { SocketContext } from "../SocketProvider";
 
 const Convo = ({ conversation, className }) => {
   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState(false);
+  /* const socket = useContext(SocketContext);
+
+  useEffect(() => {
+    const handleNewMessage = (newMessage) => {
+      setMessages([...messages, newMessage]);
+    };
+    socket.on("newMessage");
+  });
+ */
 
   useEffect(() => {
     const loadMessages = async () => {
@@ -19,7 +29,7 @@ const Convo = ({ conversation, className }) => {
     return () => {
       setMessages([]);
     };
-  }, [conversation.id, newMessage]);
+  }, [conversation.id]);
 
   return (
     <div className={`${className} flex flex-col justify-between`}>
@@ -49,12 +59,7 @@ const Convo = ({ conversation, className }) => {
             );
           })}
       </ul>
-      <InputBox
-        className=""
-        conversation={conversation}
-        setNewMessage={setNewMessage}
-        newMessage={newMessage}
-      />
+      <InputBox className="" conversation={conversation} />
     </div>
   );
 };
