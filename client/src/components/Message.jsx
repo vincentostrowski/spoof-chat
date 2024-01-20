@@ -9,13 +9,14 @@ const Message = ({ isUser, message, className }) => {
         <ProfilePic className="w-7 h-7 mt-auto" avatarURL={message.avatarURL} />
       )}
       <div className="flex flex-col m-0 p-0">
-        {isUser ? null : (
-          <div className=" text-xs text-gray-400 mx-3 mb-1">
-            {message.displayName}
-          </div>
-        )}
+        <div className=" text-xs text-gray-400 mx-3 mb-1">
+          {message.displayName}
+        </div>
         <div className={`${className} max-w-60`}>{message.text}</div>
       </div>
+      {isUser ? (
+        <ProfilePic className="w-7 h-7 mt-auto" avatarURL={message.avatarURL} />
+      ) : null}
     </div>
   );
 };
