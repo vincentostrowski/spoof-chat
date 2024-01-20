@@ -1,10 +1,10 @@
 import messageService from "../services/messageService";
 import { useState, useEffect } from "react";
-import { auth } from "../config/firebase-config";
 import Message from "./Message";
 import InputBox from "./InputBox";
 import { useContext } from "react";
 import { SocketContext } from "../SocketProvider";
+import { UserDocContext } from "../App";
 
 const Convo = ({ conversation, className }) => {
   const [messages, setMessages] = useState([]);
@@ -33,14 +33,23 @@ const Convo = ({ conversation, className }) => {
     };
   }, [conversation.id]);
 
+  const userDoc = useContext(UserDocContext);
+  const participants = conversation.participants.filter(
+    (participant) => participant.id !== userDoc.id
+  );
+
   return (
     <div className={`${className} flex flex-col justify-between`}>
-      <div className="text-center">{conversation.groupInfo.name}</div>
+      <div className="text-center">
+        {participants[1]
+          ? conversation.groupInfo.name
+          : participants[0].username}
+      </div>
       <ul className="space-y-4 overflow-auto ">
         {messages &&
           messages.map((message) => {
             let isUser = false;
-            if (auth.currentUser.uid == message.userfirebaseID) {
+            if (message.user === userDoc.id) {
               isUser = true;
             }
             return (

@@ -22,7 +22,9 @@ const ConvoOption = ({ convo }) => {
           />
         ) : null}
       </div>
-      <div className="pl-7">{convo.groupInfo.name}</div>
+      <div className="pl-7">
+        {participants[1] ? convo.groupInfo.name : participants[0].username}
+      </div>
     </div>
   );
 };
