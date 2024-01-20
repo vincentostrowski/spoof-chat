@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 
 const messageSchema = mongoose.Schema({
   text: String,
-  avatar: String,
+  avatarURL: String,
+  displayName: String,
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
     required: true,
   },
-  userfirebaseID: String,
   conversation: {
     type: mongoose.Schema.ObjectId,
     ref: "Conversation",

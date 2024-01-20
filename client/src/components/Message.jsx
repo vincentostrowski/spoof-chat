@@ -1,38 +1,20 @@
 import ProfilePic from "./ProfilePic";
-import { useEffect, useState } from "react";
-import userService from "../services/userService";
+
+//refactoring to make sure fields only dependent on message model
 
 const Message = ({ isUser, message, className }) => {
-  const [user, setUser] = useState();
-
-  useEffect(() => {
-    const getUser = async () => {
-      const user = await userService.getUser(message.user);
-      console.log();
-      setUser(user.data);
-    };
-
-    getUser();
-  }, []);
-
   return (
     <div className="flex items-center">
       {isUser ? null : (
-        <ProfilePic
-          className="w-7 h-7 mt-auto"
-          letter={user ? user.username.charAt(0) : ""}
-          user={user}
-        />
+        <ProfilePic className="w-7 h-7 mt-auto" avatarURL={message.avatarURL} />
       )}
       <div className="flex flex-col m-0 p-0">
         {isUser ? null : (
           <div className=" text-xs text-gray-400 mx-3 mb-1">
-            {user ? user.username : "..."}
+            {message.displayName}
           </div>
         )}
-        <div className={`${className} ${isUser ? "isUser" : ""} max-w-60`}>
-          {message.text}
-        </div>
+        <div className={`${className} max-w-60`}>{message.text}</div>
       </div>
     </div>
   );

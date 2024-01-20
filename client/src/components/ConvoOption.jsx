@@ -12,12 +12,12 @@ const ConvoOption = ({ convo }) => {
     <div className="flex items-center gap-4">
       <div className="flex items-center gap-3 relative">
         <ProfilePic
-          user={participants[0]}
+          avatarURL={participants[0].profilePictureURL}
           className="h-5 w-5 absolute z-10 transform -translate-y-0.5"
         />
         {participants[1] ? (
           <ProfilePic
-            user={participants[1]}
+            avatarURL={participants[1].profilePictureURL}
             className="h-5 w-5 absolute z-20 left-2 translate-y-0.5"
           />
         ) : null}

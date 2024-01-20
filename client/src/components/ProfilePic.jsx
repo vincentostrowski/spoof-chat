@@ -1,14 +1,14 @@
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { useState, useEffect } from "react";
 
-const ProfilePic = ({ user, className }) => {
+const ProfilePic = ({ avatarURL, className }) => {
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
     const fetchImage = async () => {
-      if (user.profilePictureURL) {
+      if (avatarURL) {
         const storage = getStorage();
-        const gsReference = ref(storage, user.profilePictureURL);
+        const gsReference = ref(storage, avatarURL);
 
         const url = await getDownloadURL(gsReference);
         setImageUrl(url);
@@ -16,7 +16,7 @@ const ProfilePic = ({ user, className }) => {
     };
 
     fetchImage();
-  }, [user]);
+  }, [avatarURL]);
 
   const style = imageUrl
     ? {

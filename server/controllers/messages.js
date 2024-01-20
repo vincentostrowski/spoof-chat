@@ -20,8 +20,9 @@ const createMessage = async (req, res) => {
 
   const messageBody = {
     text: body.text,
+    displayName: body.displayName,
+    avatarURL: body.avatarURL,
     user: req.user._id,
-    userfirebaseID: req.user.firebaseId,
     conversation: conversationId,
   };
 

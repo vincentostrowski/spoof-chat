@@ -65,7 +65,10 @@ const Conversations = ({ className, setConversation, logout }) => {
             className="h-10 w-auto self-start"
           />
         </div>
-        <ProfilePic user={userDoc} className="w-20 h-20" />
+        <ProfilePic
+          avatarURL={userDoc.profilePictureURL}
+          className="w-20 h-20"
+        />
         <button
           onClick={logout}
           className="w-3/5 py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:bg-red-700"
