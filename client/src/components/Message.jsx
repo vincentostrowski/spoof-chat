@@ -1,8 +1,6 @@
 import ProfilePic from "./ProfilePic";
 import { useState } from "react";
 
-//refactoring to make sure fields only dependent on message model
-
 const Message = ({ isUser, message, className }) => {
   const [isHovered, setIsHovered] = useState(false);
 

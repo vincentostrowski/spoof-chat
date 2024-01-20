@@ -10,3 +10,7 @@
   html {
     scrollbar-width: none;
   }
+
+  input[type="file"] {
+    display: none;
+  }

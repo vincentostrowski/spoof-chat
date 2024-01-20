@@ -32,10 +32,11 @@ const createMessage = async (req, res) => {
 
   try {
     const savedMessage = await message.save();
+    const populatedMessage = await savedMessage.populate("user");
     await io
       .to(`conversation-${conversationId}`)
-      .emit("newMessage", savedMessage);
-    res.status(201).json(savedMessage);
+      .emit("newMessage", populatedMessage);
+    res.status(201).json(populatedMessage);
   } catch (error) {
     res.status(500).json({ error: error.message });
     console.log(error);
