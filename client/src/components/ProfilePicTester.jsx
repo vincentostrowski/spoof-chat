@@ -1,4 +1,6 @@
-const ProfilePicTester = ({ avatarURL, className }) => {
+import { memo } from "react";
+
+const ProfilePicTester = memo(({ avatarURL, className }) => {
   const style = avatarURL
     ? {
         backgroundImage: `url(${URL.createObjectURL(avatarURL)})`,
@@ -13,6 +15,8 @@ const ProfilePicTester = ({ avatarURL, className }) => {
       style={style}
     ></div>
   );
-};
+});
+
+ProfilePicTester.displayName = "ProfilePicTester";
 
 export default ProfilePicTester;

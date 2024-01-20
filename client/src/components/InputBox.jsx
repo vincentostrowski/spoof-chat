@@ -112,7 +112,9 @@ const InputBox = ({ conversation, className }) => {
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
-                onSubmit(e);
+                if (text.trim() !== "") {
+                  onSubmit(e);
+                }
               }
             }}
           />

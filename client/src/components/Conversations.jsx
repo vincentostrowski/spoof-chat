@@ -3,7 +3,7 @@ import ConvoOption from "./ConvoOption";
 import convoService from "../services/convoService";
 import NewConvo from "./NewConvo";
 import ProfilePic from "./ProfilePic";
-import logo from "../assets/logoTEST.png";
+import logo from "../assets/SpoofLogo.png";
 import { UserDocContext } from "../App";
 import UpdateProfile from "./UpdateProfile";
 import { SocketContext } from "../SocketProvider";
@@ -58,7 +58,7 @@ const Conversations = ({ className, setConversation, logout }) => {
   return (
     <div className={className}>
       <div className="flex flex-col space-y-3 items-center mb-10">
-        <div className="w-full">
+        <div className="flex w-full justify-center">
           <img
             src={logo}
             alt="Website Logo"

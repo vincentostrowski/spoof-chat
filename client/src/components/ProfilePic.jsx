@@ -1,7 +1,7 @@
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 
-const ProfilePic = ({ avatarURL, className }) => {
+const ProfilePic = memo(({ avatarURL, className }) => {
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
@@ -34,6 +34,8 @@ const ProfilePic = ({ avatarURL, className }) => {
       {/* <p className="text-gray-100">{props.letter}</p> */}
     </div>
   );
-};
+});
+
+ProfilePic.displayName = "ProfilePic";
 
 export default ProfilePic;
