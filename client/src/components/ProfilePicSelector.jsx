@@ -23,7 +23,7 @@ const ProfilePicSelector = ({
       setAvatarURLs(avatarURLs);
     };
     getAvatars();
-  });
+  }, []);
 
   const handleSelection = (url) => {
     setOnFirebase(true);

@@ -1,14 +1,18 @@
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect, memo, useContext } from "react";
+import { UserDocContext } from "../App";
 
 const ProfilePic = memo(({ avatarURL, className }) => {
   const [imageUrl, setImageUrl] = useState(null);
+  const user = useContext(UserDocContext);
+  const URL =
+    avatarURL === "&3kd&3bdDblp8319" ? user.profilePictureURL : avatarURL;
 
   useEffect(() => {
     const fetchImage = async () => {
-      if (avatarURL) {
+      if (URL) {
         const storage = getStorage();
-        const gsReference = ref(storage, avatarURL);
+        const gsReference = ref(storage, URL);
         const url = await getDownloadURL(gsReference);
         setImageUrl(url);
       }

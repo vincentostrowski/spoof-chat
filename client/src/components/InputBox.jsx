@@ -44,8 +44,12 @@ const InputBox = ({ conversation, className }) => {
       setOnFirebase(true);
       await messageService.create(conversation.id, {
         text,
-        displayName,
-        avatarURL: uploadedURL,
+        displayName:
+          displayName === user.username ? "&3kd&3bdDblp8319" : displayName,
+        avatarURL:
+          uploadedURL === user.profilePictureURL
+            ? "&3kd&3bdDblp8319"
+            : uploadedURL,
       });
       setText("");
       setAvatarURL(uploadedURL);
@@ -150,7 +154,7 @@ const InputBox = ({ conversation, className }) => {
               }}
             />
             {openEmojis && (
-              <div className="absolute z-10 bottom-36">
+              <div className="absolute z-10 bottom-36 right-4">
                 <Picker
                   data={data}
                   onEmojiSelect={handleEmojiSelect}
