@@ -45,7 +45,7 @@ const Convo = ({ conversation, className }) => {
           ? conversation.groupInfo.name
           : participants[0].username}
       </div>
-      <ul className="space-y-4 overflow-auto ">
+      <ul className="space-y-4 overflow-auto pb-8">
         {messages &&
           messages.map((message) => {
             let isUser = false;

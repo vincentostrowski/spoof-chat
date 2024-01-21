@@ -14,6 +14,7 @@ const ProfilePicSelector = ({
   //offer search bar for brining up public ones that match query
   const [avatarURLs, setAvatarURLs] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const [names, setNames] = useState({});
 
   useEffect(() => {
     const getAvatars = async () => {
@@ -28,29 +29,38 @@ const ProfilePicSelector = ({
     getAvatars();
   }, [avatarURL]);
 
-  const handleSelection = (url) => {
+  const handleSelection = (url, index) => {
     setOnFirebase(true);
     setAvatarURL(url);
-    setDisplayName("");
+    setDisplayName(names[index] || "");
   };
 
   return (
-    <div>
+    <div className="p-3">
       {loaded && avatarURLs.length > 0 && (
         <div>
           <ul className="flex justify-center gap-1">
             {avatarURLs.map((avatarURL, index) => (
-              <li
-                onClick={() => {
-                  handleSelection(avatarURL);
-                }}
-                key={index}
-              >
-                <ProfilePic
-                  className="h-16 w-16"
-                  avatarURL={avatarURL}
+              <li key={index}>
+                <div
                   onClick={() => {
-                    handleSelection(avatarURL);
+                    handleSelection(avatarURL, index);
+                  }}
+                >
+                  <ProfilePic className="h-12 w-12" avatarURL={avatarURL} />
+                </div>
+                <input
+                  type="text"
+                  name={index}
+                  placeholder="name"
+                  value={names[index] || ""}
+                  className="w-12 text-[0.7rem] h-3 bg-gray-200 text-gray-500 text-center border border-gray-400 rounded"
+                  autoComplete="off"
+                  onChange={(e) => {
+                    setNames({
+                      ...names,
+                      [index]: e.target.value,
+                    });
                   }}
                 />
               </li>
