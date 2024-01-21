@@ -22,7 +22,7 @@ const UpdateProfile = ({ close }) => {
       //in their own folder, or should they all be shared?
       const storageRef = ref(
         storage,
-        `profilePictures/${user.uid}/${profilePicture.name}`
+        `profilePictures/${user.uid}/profilePicture`
       );
 
       const resizedImage = await resizeProfilePic(profilePicture, 200, 200);

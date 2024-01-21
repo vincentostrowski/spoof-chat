@@ -46,10 +46,7 @@ const InputBox = ({ conversation, className }) => {
         text,
         displayName:
           displayName === user.username ? "&3kd&3bdDblp8319" : displayName,
-        avatarURL:
-          uploadedURL === user.profilePictureURL
-            ? "&3kd&3bdDblp8319"
-            : uploadedURL,
+        avatarURL: uploadedURL,
       });
       setText("");
       setAvatarURL(uploadedURL);
