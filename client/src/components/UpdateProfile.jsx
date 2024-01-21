@@ -37,7 +37,6 @@ const UpdateProfile = ({ close }) => {
         profilePictureURL,
         username,
       });
-      console.log("works");
       close();
     } catch (error) {
       console.log(error);

@@ -9,7 +9,6 @@ const ProfilePic = memo(({ avatarURL, className }) => {
       if (avatarURL) {
         const storage = getStorage();
         const gsReference = ref(storage, avatarURL);
-
         const url = await getDownloadURL(gsReference);
         setImageUrl(url);
       }
