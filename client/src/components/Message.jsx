@@ -5,16 +5,18 @@ const Message = ({ isUser, message, className }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-start">
       {isUser ? null : (
-        <ProfilePic className="w-7 h-7 mt-auto" avatarURL={message.avatarURL} />
+        <div className="pt-10">
+          <ProfilePic className="w-12 h-12" avatarURL={message.avatarURL} />
+        </div>
       )}
       <div className="flex flex-col m-0 p-0">
         <div className=" text-xs text-gray-400 mx-3 mb-1">
           {isHovered ? message.user.username : message.displayName}
         </div>
         <div
-          className={`${className} max-w-60`}
+          className={`${className} max-w-60 text-base`}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -22,7 +24,9 @@ const Message = ({ isUser, message, className }) => {
         </div>
       </div>
       {isUser ? (
-        <ProfilePic className="w-7 h-7 mt-auto" avatarURL={message.avatarURL} />
+        <div className="pt-10">
+          <ProfilePic className="w-12 h-12" avatarURL={message.avatarURL} />
+        </div>
       ) : null}
     </div>
   );

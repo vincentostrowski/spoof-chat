@@ -14,11 +14,11 @@ const Convo = ({ conversation, className }) => {
     const handleNewMessage = (newMessage) => {
       setMessages((currentMessages) => [...currentMessages, newMessage]);
     };
-    socket.on("newMessage", handleNewMessage);
+    socket.on(`newMessage-${conversation.id}`, handleNewMessage);
     return () => {
-      socket.off("newMessage", handleNewMessage);
+      socket.off(`newMessage-${conversation.id}`, handleNewMessage);
     };
-  }, []);
+  }, [conversation]);
 
   useEffect(() => {
     const loadMessages = async () => {

@@ -35,7 +35,7 @@ const createMessage = async (req, res) => {
     const populatedMessage = await savedMessage.populate("user");
     await io
       .to(`conversation-${conversationId}`)
-      .emit("newMessage", populatedMessage);
+      .emit(`newMessage-${conversationId}`, populatedMessage);
     res.status(201).json(populatedMessage);
   } catch (error) {
     res.status(500).json({ error: error.message });
