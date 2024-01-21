@@ -52,7 +52,7 @@ const Conversations = ({ className, setConversation, logout }) => {
   };
 
   const handleUpdateProfileClick = () => {
-    setShowUpdateProfile(true);
+    setShowUpdateProfile(!showUpdateProfile);
   };
 
   return (

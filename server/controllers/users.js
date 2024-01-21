@@ -1,5 +1,7 @@
 const User = require("../models/user");
 const admin = require("../utils/firebaseAdmin");
+const io = require("../socket.js").getIO();
+const users = require("../socket.js").getUsers();
 
 const createUser = async (request, response) => {
   const { username, email, password } = request.body;
@@ -19,7 +21,8 @@ const createUser = async (request, response) => {
         username,
         email,
         firebaseId: userRecord.uid,
-        profilePictureURL: "gs://splitchat-fdadc.appspot.com/user.jpg",
+        profilePictureURL:
+          "gs://splitchat-fdadc.appspot.com/profilePictures/user.jpg",
       });
 
       const savedUser = await user.save();
@@ -90,6 +93,9 @@ const updateUser = async (request, response) => {
     }
 
     await user.save();
+    const socket = users[user._id];
+    const socketId = socket.id;
+    io.to(socketId).emit("updateUser", user.toJSON());
     response.status(200).json(user);
   } catch (error) {
     if (error.code === 11000) {

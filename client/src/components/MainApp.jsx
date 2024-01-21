@@ -2,10 +2,22 @@ import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase-config";
 import Conversations from "./Conversations";
 import Convo from "./Convo";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { SocketContext } from "../SocketProvider";
 
-const MainApp = ({ setUser }) => {
+const MainApp = ({ setUser, setUserDoc }) => {
   const [conversation, setConversation] = useState();
+  const socket = useContext(SocketContext);
+
+  useEffect(() => {
+    const handleUpdateProfile = async (updatedUser) => {
+      setUserDoc(updatedUser);
+    };
+    socket.on("updateUser", handleUpdateProfile);
+    return () => {
+      socket.off("updateUser", handleUpdateProfile);
+    };
+  });
 
   const logout = async () => {
     await signOut(auth);
