@@ -186,6 +186,7 @@ const InputBox = ({ conversation, className }) => {
           <ProfilePicSelector
             setOnFirebase={setOnFirebase}
             setAvatarURL={setAvatarURL}
+            avatarURL={avatarURL}
             setDisplayName={setDisplayName}
             user={user}
           />
