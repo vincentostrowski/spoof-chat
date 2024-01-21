@@ -5,6 +5,7 @@ import ProfilePic from "./ProfilePic";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../config/firebase-config";
 import { getAuth } from "firebase/auth";
+import resizeProfilePic from "../services/resizeProfilePic";
 
 const UpdateProfile = ({ close }) => {
   const [profilePicture, setProfilePicture] = useState();
@@ -23,7 +24,9 @@ const UpdateProfile = ({ close }) => {
         storage,
         `profilePictures/${user.uid}/${profilePicture.name}`
       );
-      await uploadBytesResumable(storageRef, profilePicture);
+
+      const resizedImage = await resizeProfilePic(profilePicture, 200, 200);
+      await uploadBytesResumable(storageRef, resizedImage);
       const downloadURL = await getDownloadURL(storageRef);
       return downloadURL;
     }
@@ -45,6 +48,12 @@ const UpdateProfile = ({ close }) => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+
+    if (file.size > maxSize) {
+      alert("File is too large. Please upload a file smaller than 5MB.");
+      return;
+    }
     setProfilePicture(file);
   };
 

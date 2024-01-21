@@ -7,6 +7,7 @@ import { getAuth } from "firebase/auth";
 import ProfilePic from "./ProfilePic";
 import ProfilePicTester from "./ProfilePicTester";
 import ProfilePicSelector from "./ProfilePicSelector";
+import resizeProfilePic from "../services/resizeProfilePic";
 
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
@@ -63,7 +64,9 @@ const InputBox = ({ conversation, className }) => {
         storage,
         `profilePictures/${user.uid}/${avatarURL.name}`
       );
-      await uploadBytesResumable(storageRef, avatarURL);
+
+      const resizedImage = await resizeProfilePic(avatarURL, 200, 200);
+      await uploadBytesResumable(storageRef, resizedImage);
       const downloadURL = await getDownloadURL(storageRef);
       return downloadURL;
     }
@@ -71,6 +74,13 @@ const InputBox = ({ conversation, className }) => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+
+    if (file.size > maxSize) {
+      alert("File is too large. Please upload a file smaller than 5MB.");
+      return;
+    }
+
     setAvatarURL(file);
     setOnFirebase(false);
   };
