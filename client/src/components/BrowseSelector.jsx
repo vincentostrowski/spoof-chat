@@ -7,18 +7,16 @@ const ProfilePicSelector = ({
   setOnFirebase,
   setAvatarURL,
   avatarURL,
-  setDisplayName,
-  user,
+  category,
 }) => {
   //and public/shared pics
   //offer search bar for brining up public ones that match query
   const [avatarURLs, setAvatarURLs] = useState([]);
   const [loaded, setLoaded] = useState(false);
-  const [names, setNames] = useState({});
 
   useEffect(() => {
     const getAvatars = async () => {
-      const storageRef = ref(storage, `profilePictures/${user.firebaseId}`);
+      const storageRef = ref(storage, `profilePictures/${category}`);
       const storedAvatars = await listAll(storageRef);
       const avatarURLs = await Promise.all(
         storedAvatars.items.map((item) => getDownloadURL(item))
@@ -33,10 +31,9 @@ const ProfilePicSelector = ({
     };
   }, [avatarURL]);
 
-  const handleSelection = (url, index) => {
+  const handleSelection = (url) => {
     setOnFirebase(true);
     setAvatarURL(url);
-    setDisplayName(names[index] || "");
   };
 
   return (
@@ -53,20 +50,6 @@ const ProfilePicSelector = ({
                 >
                   <ProfilePic className="h-12 w-12" avatarURL={avatarURL} />
                 </div>
-                <input
-                  type="text"
-                  name={index}
-                  placeholder="name"
-                  value={names[index] || ""}
-                  className="w-12 text-[0.7rem] h-3 bg-gray-200 text-gray-500 text-center border border-gray-400 rounded"
-                  autoComplete="off"
-                  onChange={(e) => {
-                    setNames({
-                      ...names,
-                      [index]: e.target.value,
-                    });
-                  }}
-                />
               </li>
             ))}
           </ul>

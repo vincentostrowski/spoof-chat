@@ -10,6 +10,7 @@ import ProfilePicSelector from "./ProfilePicSelector";
 import resizeProfilePic from "../services/resizeProfilePic";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
+import Browse from "./Browse";
 
 const InputBox = ({ conversation, className }) => {
   const [text, setText] = useState("");
@@ -20,6 +21,7 @@ const InputBox = ({ conversation, className }) => {
   const [avatarURL, setAvatarURL] = useState(user.profilePictureURL);
   const [onFirebase, setOnFirebase] = useState(true);
   const [openEmojis, setOpenEmojis] = useState(false);
+  const [openBrowse, setOpenBrowse] = useState(false);
   const textareaRef = useRef(null);
 
   useEffect(() => {
@@ -119,101 +121,118 @@ const InputBox = ({ conversation, className }) => {
   };
 
   return (
-    <div className={`${className} bg-gray-200 p-2 rounded w-full h-30`}>
-      <div>
-        <form onSubmit={onSubmit} className="flex gap-3">
-          <div className="flex flex-col items-center">
-            <input
-              type="text"
-              value={displayName}
-              placeholder="message name"
-              onChange={(e) => setDisplayName(e.target.value)}
-              className="text-center rounded-lg text-gray-400"
-              required
-            />
-
-            {/* if avatar is initial firebase url , passed to component which fetches from firebase*/}
-            {/* if changed by upload, goes to one with no firebase fetch */}
-
-            {onFirebase ? (
-              <ProfilePic avatarURL={avatarURL} className="w-20 h-20 m-2" />
-            ) : (
-              <ProfilePicTester
-                avatarURL={avatarURL}
-                className="w-20 h-20 m-2"
+    <div>
+      {openBrowse && (
+        <Browse
+          setOnFirebase={setOnFirebase}
+          setAvatarURL={setAvatarURL}
+          avatarURL={avatarURL}
+          clasName="mb-30"
+        />
+      )}
+      <div className={`${className} bg-gray-200 p-2 rounded w-full h-30`}>
+        <div>
+          <form onSubmit={onSubmit} className="flex gap-3">
+            <div className="flex flex-col items-center">
+              <input
+                type="text"
+                value={displayName}
+                placeholder="message name"
+                onChange={(e) => setDisplayName(e.target.value)}
+                className="text-center rounded-lg text-gray-400"
+                required
               />
-            )}
-            <button
-              type="button"
-              onClick={() => document.getElementById("fileUpload").click()}
-              className="text-xs"
-            >
-              Upload
-            </button>
-            <input
-              id="fileUpload"
-              type="file"
-              onChange={handleFileChange}
-              style={{ display: "none" }}
-            />
-          </div>
-          <div className="flex flex-col flex-grow">
-            <div className="flex">
-              <textarea
-                ref={textareaRef}
-                placeholder="enter a message..."
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                className="w-4/5 h-10 resize-none overflow-auto flex-grow rounded-lg text-center"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    if (text.trim() !== "") {
-                      onSubmit(e);
-                    }
-                  }
-                }}
-              />
-              {openEmojis && (
-                <div className="absolute z-10 bottom-36 right-4">
-                  <Picker
-                    data={data}
-                    onEmojiSelect={handleEmojiSelect}
-                    onClickOutside={() => {
-                      if (openEmojis) {
-                        setOpenEmojis(false);
-                      }
-                    }}
-                  />
-                </div>
+
+              {/* if avatar is initial firebase url , passed to component which fetches from firebase*/}
+              {/* if changed by upload, goes to one with no firebase fetch */}
+
+              {onFirebase ? (
+                <ProfilePic avatarURL={avatarURL} className="w-20 h-20 m-2" />
+              ) : (
+                <ProfilePicTester
+                  avatarURL={avatarURL}
+                  className="w-20 h-20 m-2"
+                />
               )}
-              <div className="flex items-start gap-4 px-2">
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setOpenEmojis(!openEmojis);
-                  }}
-                >
-                  😊
-                </button>
-                <button className="rounded-lg bg-blue-600 text-white p-1">
-                  Send
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={() => document.getElementById("fileUpload").click()}
+                className="text-xs"
+              >
+                Upload
+              </button>
+              <input
+                id="fileUpload"
+                type="file"
+                onChange={handleFileChange}
+                style={{ display: "none" }}
+              />
             </div>
-            <ProfilePicSelector
-              setOnFirebase={setOnFirebase}
-              setAvatarURL={setAvatarURL}
-              avatarURL={avatarURL}
-              setDisplayName={setDisplayName}
-              user={user}
-            />
-            <button type="button" className="text-xs">
-              Browse
-            </button>
-          </div>
-        </form>
+            <div className="flex flex-col flex-grow justify-between">
+              <div className="flex">
+                <textarea
+                  ref={textareaRef}
+                  placeholder="enter a message..."
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  className="w-4/5 h-10 resize-none overflow-auto flex-grow rounded-lg text-center"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      if (text.trim() !== "") {
+                        onSubmit(e);
+                      }
+                    }
+                  }}
+                />
+                {openEmojis && (
+                  <div className="absolute z-10 bottom-36 right-4">
+                    <Picker
+                      data={data}
+                      onEmojiSelect={handleEmojiSelect}
+                      onClickOutside={() => {
+                        if (openEmojis) {
+                          setOpenEmojis(false);
+                        }
+                      }}
+                    />
+                  </div>
+                )}
+                <div className="flex items-start gap-4 px-2">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setOpenEmojis(!openEmojis);
+                    }}
+                  >
+                    😊
+                  </button>
+                  <button className="rounded-lg bg-blue-600 text-white p-1">
+                    Send
+                  </button>
+                </div>
+              </div>
+              <ProfilePicSelector
+                setOnFirebase={setOnFirebase}
+                setAvatarURL={setAvatarURL}
+                avatarURL={avatarURL}
+                setDisplayName={setDisplayName}
+                user={user}
+              />
+              <button
+                type="button"
+                className="text-xs"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpenBrowse(!openBrowse);
+                }}
+              >
+                Browse
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
