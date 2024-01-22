@@ -20,7 +20,6 @@ function App() {
         try {
           const response = await userService.getUserFirebaseUID();
           setUserDoc(response.data);
-          setLoading(false);
         } catch (error) {
           console.log(error);
         }
@@ -35,6 +34,7 @@ function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setLoading(false);
     });
 
     // Cleanup subscription on unmount
@@ -62,7 +62,7 @@ function App() {
         </UserDocContext.Provider>
       </SocketProvider>
     );
-  } else {
+  } else if (user === null) {
     return <Auth />;
   }
 }

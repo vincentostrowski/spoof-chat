@@ -27,6 +27,10 @@ const ProfilePicSelector = ({
       setLoaded(true);
     };
     getAvatars();
+    return () => {
+      setAvatarURLs([]);
+      setLoaded(false);
+    };
   }, [avatarURL]);
 
   const handleSelection = (url, index) => {
