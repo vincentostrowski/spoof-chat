@@ -96,10 +96,10 @@ const Conversations = ({ className, setConversation, logout }) => {
       </div>
       <ul className="space-y-4">
         {convos &&
-          convos.map((convo) => {
+          convos.map((convo, index) => {
             return (
               <li
-                key={convo._id}
+                key={index}
                 onClick={() => setConversation(convo)}
                 className="bg-white p-2 rounded hover:bg-gray-50 hover:shadow-sm cursor-pointer"
               >

@@ -47,16 +47,13 @@ const Convo = ({ conversation, className }) => {
       </div>
       <ul className="space-y-4 overflow-auto pb-8">
         {messages &&
-          messages.map((message) => {
+          messages.map((message, index) => {
             let isUser = false;
             if (message.user.id === userDoc.id) {
               isUser = true;
             }
             return (
-              <li
-                key={message._id}
-                className={`flex ${isUser ? "justify-end" : ""}`}
-              >
+              <li key={index} className={`flex ${isUser ? "justify-end" : ""}`}>
                 <Message
                   message={message}
                   className={`${

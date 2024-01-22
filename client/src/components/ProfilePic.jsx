@@ -1,16 +1,24 @@
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { useState, useEffect, memo } from "react";
+import {
+  getImageUrlFromCache,
+  setImageUrlToCache,
+} from "../services/imageURLCache";
 
 const ProfilePic = memo(({ avatarURL, className }) => {
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
     const fetchImage = async () => {
-      if (avatarURL) {
+      const cachedUrl = getImageUrlFromCache(avatarURL);
+      if (cachedUrl) {
+        setImageUrl(cachedUrl);
+      } else {
         const storage = getStorage();
         const gsReference = ref(storage, avatarURL);
         const url = await getDownloadURL(gsReference);
         setImageUrl(url);
+        setImageUrlToCache(avatarURL, url);
       }
     };
 
