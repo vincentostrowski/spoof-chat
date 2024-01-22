@@ -8,7 +8,6 @@ const users = require("../socket.js").getUsers();
 const createConversation = async (req, res) => {
   const body = req.body;
   const participants = [req.user._id];
-  console.log(body.participants);
 
   if (body.participants.length === 1) {
     let user = await User.findOne({ username: body.participants[0] });

@@ -45,7 +45,7 @@ const Conversations = ({ className, setConversation, logout }) => {
     return () => {
       socket.off("newConvo", handleNewConvo);
     };
-  }, []);
+  }, [socket]);
 
   const handleAddConvoClick = () => {
     setShowNewConversation(true);

@@ -35,6 +35,10 @@ const InputBox = ({ conversation, className }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (text === "") return;
+    if (displayName === "") {
+      alert("Please enter a message name as well");
+      return;
+    }
     try {
       const uploadedURL = onFirebase
         ? avatarURL
