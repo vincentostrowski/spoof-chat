@@ -55,13 +55,17 @@ const UpdateProfile = ({ close }) => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    const maxSize = 1 * 1024 * 1024; // 1MB
 
     if (file.size > maxSize) {
       alert("File is too large. Please upload a file smaller than 5MB.");
       return;
     }
-    setProfilePicture(file);
+
+    const sanitizedFileName = file.name.replace(/[^a-zA-Z0-9.]/g, "");
+    const newFile = new File([file], sanitizedFileName, { type: file.type });
+
+    setProfilePicture(newFile);
     setOnFirebase(false);
   };
 
