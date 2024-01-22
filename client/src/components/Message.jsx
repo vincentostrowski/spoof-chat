@@ -8,7 +8,7 @@ const Message = ({ isUser, message, className }) => {
   return (
     <div className="flex items-start">
       {isUser ? null : (
-        <div className="pt-10">
+        <div className="h-full flex flex-col justify-end">
           <ProfilePic className="w-12 h-12" avatarURL={message.avatarURL} />
         </div>
       )}
@@ -18,20 +18,22 @@ const Message = ({ isUser, message, className }) => {
             ? message.user.username
             : message.displayName}
         </div>
-        <div
-          className={`${className} max-w-60 text-base`}
-          onMouseEnter={() => {
-            if (!ownDisplayName) setIsHovered(true);
-          }}
-          onMouseLeave={() => {
-            setIsHovered(false);
-          }}
-        >
-          {message.text}
+        <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
+          <div
+            className={`${className} max-w-60 text-base mb-3`}
+            onMouseEnter={() => {
+              if (!ownDisplayName) setIsHovered(true);
+            }}
+            onMouseLeave={() => {
+              setIsHovered(false);
+            }}
+          >
+            {message.text}
+          </div>
         </div>
       </div>
       {isUser ? (
-        <div className="pt-10">
+        <div className="h-full flex flex-col justify-end">
           <ProfilePic className="w-12 h-12" avatarURL={message.avatarURL} />
         </div>
       ) : null}

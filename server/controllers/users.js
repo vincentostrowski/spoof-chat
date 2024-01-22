@@ -96,6 +96,13 @@ const updateUser = async (request, response) => {
     const socket = users[user._id];
     const socketId = socket.id;
     io.to(socketId).emit("updateUser", user.toJSON());
+    //another socket emit to users who are in groups with this updated user
+    //they should rerender: convo,
+
+    //looop through conversationIDs user is part of, since rooms named based on this
+    //for each room emit 'peerUpdated'
+    //catch this emit in convo component & conversations
+
     response.status(200).json(user);
   } catch (error) {
     if (error.code === 11000) {

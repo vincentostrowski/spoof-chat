@@ -17,6 +17,7 @@
     "css-loader": "^6.9.1",
     "emoji-mart": "^5.5.2",
     "firebase": "^10.7.1",
+    "image-to-base64": "^2.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.1",
