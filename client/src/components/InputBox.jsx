@@ -5,7 +5,6 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../config/firebase-config";
 import { getAuth } from "firebase/auth";
 import ProfilePic from "./ProfilePic";
-import ProfilePicTester from "./ProfilePicTester";
 import ProfilePicSelector from "./ProfilePicSelector";
 import resizeProfilePic from "../services/resizeProfilePic";
 import data from "@emoji-mart/data";
@@ -65,15 +64,17 @@ const InputBox = ({ conversation, className }) => {
   const uploadPicFirebase = async (avatarURL) => {
     if (avatarURL) {
       const user = getAuth().currentUser;
-      //figure out best way to store the user's profile pics in firebase
-      //in their own folder, or should they all be shared?
       const storageRef = ref(
         storage,
         `profilePictures/${user.uid}/${avatarURL.name}`
       );
 
+      const metadata = {
+        cacheControl: "public, max-age=31536000",
+      };
+
       const resizedImage = await resizeProfilePic(avatarURL, 100, 100);
-      await uploadBytesResumable(storageRef, resizedImage);
+      await uploadBytesResumable(storageRef, resizedImage, metadata);
       const downloadURL = await getDownloadURL(storageRef);
       return downloadURL;
     }
@@ -149,8 +150,8 @@ const InputBox = ({ conversation, className }) => {
               {onFirebase ? (
                 <ProfilePic avatarURL={avatarURL} className="w-20 h-20 m-2" />
               ) : (
-                <ProfilePicTester
-                  avatarURL={avatarURL}
+                <ProfilePic
+                  avatarURL={URL.createObjectURL(avatarURL)}
                   className="w-20 h-20 m-2"
                 />
               )}

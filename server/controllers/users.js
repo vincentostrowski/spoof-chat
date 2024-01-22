@@ -22,7 +22,7 @@ const createUser = async (request, response) => {
         email,
         firebaseId: userRecord.uid,
         profilePictureURL:
-          "gs://splitchat-fdadc.appspot.com/profilePictures/user.jpg",
+          "https://firebasestorage.googleapis.com/v0/b/splitchat-fdadc.appspot.com/o/profilePicture?alt=media&token=bf61e1a4-a5d4-4b34-88e4-bebbcd908e3e",
       });
 
       const savedUser = await user.save();

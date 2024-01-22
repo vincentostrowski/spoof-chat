@@ -2,7 +2,6 @@ import userService from "../services/userService";
 import { useState, useContext } from "react";
 import { UserDocContext } from "../App";
 import ProfilePic from "./ProfilePic";
-import ProfilePicTester from "./ProfilePicTester";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../config/firebase-config";
 import { getAuth } from "firebase/auth";
@@ -29,8 +28,12 @@ const UpdateProfile = ({ close }) => {
         `profilePictures/${user.uid}/profilePicture`
       );
 
+      const metadata = {
+        cacheControl: "public, max-age=31536000",
+      };
+
       const resizedImage = await resizeProfilePic(profilePicture, 200, 200);
-      await uploadBytesResumable(storageRef, resizedImage);
+      await uploadBytesResumable(storageRef, resizedImage, metadata);
       const downloadURL = await getDownloadURL(storageRef);
       return downloadURL;
     }
@@ -82,8 +85,8 @@ const UpdateProfile = ({ close }) => {
         {onFirebase ? (
           <ProfilePic avatarURL={profilePicture} className="w-20 h-20 m-2" />
         ) : (
-          <ProfilePicTester
-            avatarURL={profilePicture}
+          <ProfilePic
+            avatarURL={URL.createObjectURL(profilePicture)}
             className="w-20 h-20 m-2"
           />
         )}

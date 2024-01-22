@@ -1,33 +1,9 @@
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { useState, useEffect, memo } from "react";
-import {
-  getImageUrlFromCache,
-  setImageUrlToCache,
-} from "../services/imageURLCache";
+import { memo } from "react";
 
 const ProfilePic = memo(({ avatarURL, className }) => {
-  const [imageUrl, setImageUrl] = useState(null);
-
-  useEffect(() => {
-    const fetchImage = async () => {
-      const cachedUrl = getImageUrlFromCache(avatarURL);
-      if (cachedUrl) {
-        setImageUrl(cachedUrl);
-      } else {
-        const storage = getStorage();
-        const gsReference = ref(storage, avatarURL);
-        const url = await getDownloadURL(gsReference);
-        setImageUrl(url);
-        setImageUrlToCache(avatarURL, url);
-      }
-    };
-
-    fetchImage();
-  }, [avatarURL]);
-
-  const style = imageUrl
+  const style = avatarURL
     ? {
-        backgroundImage: `url(${imageUrl})`,
+        backgroundImage: `url(${avatarURL})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }
@@ -37,9 +13,7 @@ const ProfilePic = memo(({ avatarURL, className }) => {
     <div
       className={`${className} bg-gray-400 rounded-full flex items-center justify-center`}
       style={style}
-    >
-      {/* <p className="text-gray-100">{props.letter}</p> */}
-    </div>
+    ></div>
   );
 });
 
