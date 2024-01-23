@@ -4,7 +4,7 @@ import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { useEffect, useState } from "react";
 
 const ProfilePicSelector = ({
-  setOnFirebase,
+  setUploaded,
   setAvatarURL,
   avatarURL,
   setDisplayName,
@@ -34,7 +34,7 @@ const ProfilePicSelector = ({
   }, [avatarURL]);
 
   const handleSelection = (url, index) => {
-    setOnFirebase(true);
+    setUploaded(true);
     setAvatarURL(url);
     setDisplayName(names[index] || "");
   };

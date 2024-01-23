@@ -10,6 +10,7 @@ import resizeProfilePic from "../services/resizeProfilePic";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import Browse from "./Browse";
+import PasteURL from "./PasteURL";
 
 const InputBox = ({ conversation, className }) => {
   const [text, setText] = useState("");
@@ -18,9 +19,10 @@ const InputBox = ({ conversation, className }) => {
   //this initializes to the stored firebase link of user profilepic
   //eventually getting passed to profile pic which fetches from firebae
   const [avatarURL, setAvatarURL] = useState(user.profilePictureURL);
-  const [onFirebase, setOnFirebase] = useState(true);
+  const [uploaded, setUploaded] = useState(true);
   const [openEmojis, setOpenEmojis] = useState(false);
   const [openBrowse, setOpenBrowse] = useState(false);
+  const [openPasteURL, setOpenPasteURL] = useState(false);
   const textareaRef = useRef(null);
 
   useEffect(() => {
@@ -41,10 +43,10 @@ const InputBox = ({ conversation, className }) => {
       return;
     }
     try {
-      const uploadedURL = onFirebase
+      const uploadedURL = uploaded
         ? avatarURL
         : await uploadPicFirebase(avatarURL);
-      setOnFirebase(true);
+      setUploaded(true);
       await messageService.create(conversation.id, {
         text,
         displayName:
@@ -93,14 +95,14 @@ const InputBox = ({ conversation, className }) => {
     const newFile = new File([file], sanitizedFileName, { type: file.type });
 
     setAvatarURL(newFile);
-    setOnFirebase(false);
+    setUploaded(false);
   };
 
   // if all URLS the same, no need to fetch them from firebase.
   // should all be numbered 0-9
 
   // have function that's called at the end of fileChange
-  // move the fetching of avatarURL from firebase here, in a useEffect, w/ [onFirebase]
+  // move the fetching of avatarURL from firebase here, in a useEffect, w/ [uploaded]
   // hold a state for avatarURLs here and pass this to profilePicSelector
   // maybe have profile selector open at all times
   // 'browse' should open public searchable pics
@@ -125,10 +127,16 @@ const InputBox = ({ conversation, className }) => {
     <div>
       {openBrowse && (
         <Browse
-          setOnFirebase={setOnFirebase}
+          setUploaded={setUploaded}
           setAvatarURL={setAvatarURL}
-          avatarURL={avatarURL}
           clasName="mb-30"
+        />
+      )}
+      {openPasteURL && (
+        <PasteURL
+          setUploaded={setUploaded}
+          setAvatarURL={setAvatarURL}
+          setOpenPasteURL={setOpenPasteURL}
         />
       )}
       <div className={`${className} bg-gray-200 p-2 rounded w-full h-30`}>
@@ -147,7 +155,7 @@ const InputBox = ({ conversation, className }) => {
               {/* if avatar is initial firebase url , passed to component which fetches from firebase*/}
               {/* if changed by upload, goes to one with no firebase fetch */}
 
-              {onFirebase ? (
+              {uploaded ? (
                 <ProfilePic avatarURL={avatarURL} className="w-20 h-20 m-2" />
               ) : (
                 <ProfilePic
@@ -168,6 +176,13 @@ const InputBox = ({ conversation, className }) => {
                 onChange={handleFileChange}
                 style={{ display: "none" }}
               />
+              <button
+                type="button"
+                className="text-xs"
+                onClick={() => setOpenPasteURL(!openPasteURL)}
+              >
+                Paste URL
+              </button>
             </div>
             <div className="flex flex-col flex-grow justify-between">
               <div className="flex">
@@ -215,7 +230,7 @@ const InputBox = ({ conversation, className }) => {
                 </div>
               </div>
               <ProfilePicSelector
-                setOnFirebase={setOnFirebase}
+                setUploaded={setUploaded}
                 setAvatarURL={setAvatarURL}
                 avatarURL={avatarURL}
                 setDisplayName={setDisplayName}

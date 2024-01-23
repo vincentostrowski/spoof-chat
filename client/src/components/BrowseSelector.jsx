@@ -3,12 +3,7 @@ import { storage } from "../config/firebase-config";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { useEffect, useState } from "react";
 
-const ProfilePicSelector = ({
-  setOnFirebase,
-  setAvatarURL,
-  avatarURL,
-  category,
-}) => {
+const BrowseSelector = ({ setUploaded, setAvatarURL, category }) => {
   //and public/shared pics
   //offer search bar for brining up public ones that match query
   const [avatarURLs, setAvatarURLs] = useState([]);
@@ -29,10 +24,10 @@ const ProfilePicSelector = ({
       setAvatarURLs([]);
       setLoaded(false);
     };
-  }, [avatarURL]);
+  }, []);
 
   const handleSelection = (url) => {
-    setOnFirebase(true);
+    setUploaded(true);
     setAvatarURL(url);
   };
 
@@ -62,4 +57,4 @@ const ProfilePicSelector = ({
   );
 };
 
-export default ProfilePicSelector;
+export default BrowseSelector;

@@ -1,20 +1,18 @@
 import BrowseSelector from "./BrowseSelector";
 
-const Browse = ({ className, setOnFirebase, setAvatarURL, avatarURL }) => {
+const Browse = ({ className, setUploaded, setAvatarURL }) => {
   return (
     <div className="flex justify-center h-40 inline-block rounded-t-xl">
       <div className={`${className} bg-gray-200 rounded-t-xl`}>
         <BrowseSelector
-          setOnFirebase={setOnFirebase}
+          setUploaded={setUploaded}
           setAvatarURL={setAvatarURL}
-          avatarURL={avatarURL}
           category="Celebs"
           clasName=""
         />
         <BrowseSelector
-          setOnFirebase={setOnFirebase}
+          setUploaded={setUploaded}
           setAvatarURL={setAvatarURL}
-          avatarURL={avatarURL}
           category="Profs"
           clasName=""
         />
