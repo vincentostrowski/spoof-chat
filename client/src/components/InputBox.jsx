@@ -142,19 +142,15 @@ const InputBox = ({ conversation, className }) => {
       <div className={`${className} bg-gray-200 p-2 rounded w-full h-30`}>
         <div>
           <form onSubmit={onSubmit} className="flex gap-3">
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center flex-shrink">
               <input
                 type="text"
                 value={displayName}
                 placeholder="message name"
                 onChange={(e) => setDisplayName(e.target.value)}
-                className="text-center rounded-lg text-gray-400"
+                className="text-center rounded-lg text-gray-400 w-full"
                 required
               />
-
-              {/* if avatar is initial firebase url , passed to component which fetches from firebase*/}
-              {/* if changed by upload, goes to one with no firebase fetch */}
-
               {uploaded ? (
                 <ProfilePic avatarURL={avatarURL} className="w-20 h-20 m-2" />
               ) : (
@@ -184,7 +180,7 @@ const InputBox = ({ conversation, className }) => {
                 Paste URL
               </button>
             </div>
-            <div className="flex flex-col flex-grow justify-between">
+            <div className="flex flex-col flex-grow justify-between flex-shrink">
               <div className="flex">
                 <textarea
                   ref={textareaRef}

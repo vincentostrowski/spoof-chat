@@ -77,7 +77,7 @@ const UpdateProfile = ({ close }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
+    <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-50">
       <form
         onSubmit={onSubmit}
         className="bg-white p-6 rounded shadow-md max-w-md w-full flex flex-col justify-center items-center pointer-events-auto"

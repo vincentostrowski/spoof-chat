@@ -56,7 +56,7 @@ const NewConvo = ({ close }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
+    <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-50">
       <div className="flex flex-col items-center justify-center pointer-events-auto w-full max-w-md">
         <form
           onSubmit={handleSubmit}

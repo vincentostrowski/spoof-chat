@@ -8,7 +8,12 @@ import { UserDocContext } from "../App";
 import UpdateProfile from "./UpdateProfile";
 import { SocketContext } from "../SocketProvider";
 
-const Conversations = ({ className, setConversation, logout }) => {
+const Conversations = ({
+  className,
+  setConversation,
+  logout,
+  setIsMobileNavVisible,
+}) => {
   const [convos, setConvos] = useState();
   const [showNewConversation, setShowNewConversation] = useState(false);
   const [showUpdateProfile, setShowUpdateProfile] = useState(false);
@@ -48,7 +53,7 @@ const Conversations = ({ className, setConversation, logout }) => {
   }, [socket]);
 
   const handleAddConvoClick = () => {
-    setShowNewConversation(true);
+    setShowNewConversation(!showNewConversation);
   };
 
   const handleUpdateProfileClick = () => {
@@ -100,7 +105,10 @@ const Conversations = ({ className, setConversation, logout }) => {
             return (
               <li
                 key={index}
-                onClick={() => setConversation(convo)}
+                onClick={() => {
+                  setConversation(convo);
+                  setIsMobileNavVisible(false);
+                }}
                 className="bg-white p-2 rounded hover:bg-gray-50 hover:shadow-sm cursor-pointer"
               >
                 <ConvoOption convo={convo} />

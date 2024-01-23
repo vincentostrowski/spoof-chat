@@ -4,10 +4,12 @@ import Conversations from "./Conversations";
 import Convo from "./Convo";
 import { useState, useContext, useEffect } from "react";
 import { SocketContext } from "../SocketProvider";
+import { FiMenu } from "react-icons/fi";
 
 const MainApp = ({ setUser, setUserDoc }) => {
   const [conversation, setConversation] = useState();
   const socket = useContext(SocketContext);
+  const [isMobileNavVisible, setIsMobileNavVisible] = useState(true);
 
   useEffect(() => {
     const handleUpdateProfile = async (updatedUser) => {
@@ -28,9 +30,25 @@ const MainApp = ({ setUser, setUserDoc }) => {
     <div className="flex h-screen">
       <Conversations
         setConversation={setConversation}
-        className="w-64 bg-gray-100 min-h-screen p-4 overflow-auto"
+        className={`w-full lg:w-64 bg-gray-100 min-h-screen p-4 overflow-auto lg:block ${
+          isMobileNavVisible ? "block" : "hidden"
+        }`}
         logout={logout}
+        setIsMobileNavVisible={setIsMobileNavVisible}
       />
+      <div
+        className={`absolute top-0 left-0 p-4 lg:hidden p-4 ${
+          isMobileNavVisible ? "hidden" : "block"
+        }`}
+      >
+        <FiMenu
+          onClick={() => {
+            setIsMobileNavVisible(!isMobileNavVisible);
+            setConversation(null);
+          }}
+          size={30}
+        />
+      </div>
       {conversation && (
         <Convo
           conversation={conversation}

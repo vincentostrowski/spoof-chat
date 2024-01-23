@@ -25,7 +25,7 @@ const PasteURL = ({ setUploaded, setAvatarURL, setOpenPasteURL }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-10">
+    <div className="fixed inset-0 flex items-center justify-center z-50">
       <div ref={popupRef} className="bg-white p-5 rounded shadow-lg">
         <form onSubmit={(e) => onSubmit(e)}>
           <input
