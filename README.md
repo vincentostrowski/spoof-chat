@@ -14,5 +14,3 @@ Welcome to Spoof, a unique messaging platform that brings humor to your conversa
 
 - **Revealing Sender**: Hover over a message to change from the parody username to the sender's username. 
 - **Uploading ProfilePictures Limit**: Upload up to ten pictures to use and change between in conversations.
-
-Enjoy creating your Spoof messages!
