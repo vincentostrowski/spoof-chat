@@ -1,16 +1,16 @@
-import BrowseSelector from "./BrowseSelector";
+import AvatarBrowseRow from "./AvatarBrowseRow";
 
-const Browse = ({ className, setUploaded, setAvatarURL }) => {
+const AvatarBrowse = ({ className, setUploaded, setAvatarURL }) => {
   return (
     <div className="flex justify-center h-40 inline-block rounded-t-xl">
       <div className={`${className} bg-gray-200 rounded-t-xl`}>
-        <BrowseSelector
+        <AvatarBrowseRow
           setUploaded={setUploaded}
           setAvatarURL={setAvatarURL}
           category="Celebs"
           clasName=""
         />
-        <BrowseSelector
+        <AvatarBrowseRow
           setUploaded={setUploaded}
           setAvatarURL={setAvatarURL}
           category="Profs"
@@ -21,4 +21,4 @@ const Browse = ({ className, setUploaded, setAvatarURL }) => {
   );
 };
 
-export default Browse;
+export default AvatarBrowse;

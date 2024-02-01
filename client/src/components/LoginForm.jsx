@@ -1,27 +1,25 @@
 import { useState } from "react";
-import userService from "../services/userService";
 import { auth } from "../config/firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import logo from "../assets/SpoofLogo.png";
 
-const SignUp = ({ switchToLogin }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const LoginForm = ({ switchToSignUp }) => {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const signInWithEmail = async (email, password) => {
     try {
-      const body = { username, password, email };
-      await userService.create(body);
       await signInWithEmailAndPassword(auth, email, password);
-
-      setUsername("");
-      setPassword("");
-      setEmail("");
-    } catch (err) {
-      console.error(err.message);
-      alert(err.response.data.error);
+    } catch (error) {
+      if (error.code === "auth/user-not-found") {
+        alert("There is no user associated with this email.");
+      } else if (error.code === "auth/wrong-password") {
+        alert("The password is incorrect.");
+      } else if (error.code === "auth/invalid-credential") {
+        alert("Invalid credentials");
+      } else {
+        alert(error.code, error.message);
+      }
     }
   };
 
@@ -29,7 +27,10 @@ const SignUp = ({ switchToLogin }) => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200">
       <form
         className="bg-white p-6 rounded shadow-md max-w-md"
-        onSubmit={handleSubmit}
+        onSubmit={(e) => {
+          e.preventDefault();
+          signInWithEmail(email, password);
+        }}
       >
         <img
           src={logo}
@@ -37,53 +38,41 @@ const SignUp = ({ switchToLogin }) => {
           className="h-20 w-auto mb-5 mx-auto"
         />
         <h2 className="mb-4 text-xl font-bold text-gray-500 text-center">
-          Create Account
+          Login
         </h2>
         <input
           type="email"
-          id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
           className="w-full p-2 mb-4 border border-gray-300 rounded"
-          placeholder="Email"
-        />
-        <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-          className="w-full p-2 mb-4 border border-gray-300 rounded"
-          placeholder="Username"
+          placeholder="Email address"
         />
         <input
           type="password"
-          id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
           className="w-full p-2 mb-4 border border-gray-300 rounded"
           placeholder="Password"
-          minLength="6"
         />
         <button
           type="submit"
           className="w-full p-2 text-white bg-blue-500 rounded hover:bg-blue-600"
         >
-          Sign Up
+          Login
         </button>
       </form>
       <div className="flex justify-between mt-4 gap-9">
         <button
-          onClick={switchToLogin}
+          onClick={switchToSignUp}
           className="text-green-500 hover:underline"
         >
-          Already have an account? Log In
+          No account? Sign Up
         </button>
       </div>
     </div>
   );
 };
 
-export default SignUp;
+export default LoginForm;

@@ -1,13 +1,13 @@
+import Avatar from "./Avatar";
 import userService from "../services/userService";
+import resizeProfilePic from "../utils/resizeProfilePic";
 import { useState, useContext } from "react";
 import { UserDocContext } from "../App";
-import ProfilePic from "./ProfilePic";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../config/firebase-config";
 import { getAuth } from "firebase/auth";
-import resizeProfilePic from "../services/resizeProfilePic";
 
-const UpdateProfile = ({ close }) => {
+const UpdateProfileForm = ({ close }) => {
   const userDoc = useContext(UserDocContext);
   const [profilePicture, setProfilePicture] = useState(
     userDoc.profilePictureURL
@@ -79,9 +79,9 @@ const UpdateProfile = ({ close }) => {
         className="bg-white p-6 rounded shadow-md max-w-md w-full flex flex-col justify-center items-center pointer-events-auto"
       >
         {onFirebase ? (
-          <ProfilePic avatarURL={profilePicture} className="w-20 h-20 m-2" />
+          <Avatar avatarURL={profilePicture} className="w-20 h-20 m-2" />
         ) : (
-          <ProfilePic
+          <Avatar
             avatarURL={URL.createObjectURL(profilePicture)}
             className="w-20 h-20 m-2"
           />
@@ -126,4 +126,4 @@ const UpdateProfile = ({ close }) => {
   );
 };
 
-export default UpdateProfile;
+export default UpdateProfileForm;

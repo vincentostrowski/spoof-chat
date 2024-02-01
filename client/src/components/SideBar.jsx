@@ -1,14 +1,14 @@
-import { useEffect, useState, useContext } from "react";
-import ConvoOption from "./ConvoOption";
+import Avatar from "./Avatar";
+import ConversationOption from "./ConversationOption";
+import UpdateProfileForm from "./UpdateProfileForm";
+import NewConversationForm from "./NewConversationForm";
 import convoService from "../services/convoService";
-import NewConvo from "./NewConvo";
-import ProfilePic from "./ProfilePic";
-import logo from "../assets/SpoofLogo.png";
+import { useEffect, useState, useContext } from "react";
 import { UserDocContext } from "../App";
-import UpdateProfile from "./UpdateProfile";
-import { SocketContext } from "../SocketProvider";
+import { SocketContext } from "../utils/SocketProvider";
+import logo from "../assets/SpoofLogo.png";
 
-const Conversations = ({
+const SideBar = ({
   className,
   setConversation,
   logout,
@@ -67,10 +67,7 @@ const Conversations = ({
             className="h-10 w-auto self-start"
           />
         </div>
-        <ProfilePic
-          avatarURL={userDoc.profilePictureURL}
-          className="w-20 h-20"
-        />
+        <Avatar avatarURL={userDoc.profilePictureURL} className="w-20 h-20" />
         <button
           onClick={logout}
           className="w-3/5 py-2 px-4 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:bg-red-700"
@@ -84,7 +81,7 @@ const Conversations = ({
           Update Profile
         </button>
         {showUpdateProfile && (
-          <UpdateProfile close={() => setShowUpdateProfile(false)} />
+          <UpdateProfileForm close={() => setShowUpdateProfile(false)} />
         )}
         <button
           onClick={handleAddConvoClick}
@@ -93,7 +90,7 @@ const Conversations = ({
           New Convo
         </button>
         {showNewConversation && (
-          <NewConvo close={() => setShowNewConversation(false)} />
+          <NewConversationForm close={() => setShowNewConversation(false)} />
         )}
       </div>
       <ul className="space-y-4">
@@ -108,7 +105,7 @@ const Conversations = ({
                 }}
                 className="bg-white p-2 rounded hover:bg-gray-50 hover:shadow-sm cursor-pointer"
               >
-                <ConvoOption convo={convo} />
+                <ConversationOption convo={convo} />
               </li>
             );
           })}
@@ -117,4 +114,4 @@ const Conversations = ({
   );
 };
 
-export default Conversations;
+export default SideBar;

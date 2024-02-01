@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-const ProfilePic = memo(({ avatarURL, className }) => {
+const Avatar = memo(({ avatarURL, className }) => {
   const style = avatarURL
     ? {
         backgroundImage: `url(${avatarURL})`,
@@ -17,6 +17,6 @@ const ProfilePic = memo(({ avatarURL, className }) => {
   );
 });
 
-ProfilePic.displayName = "ProfilePic";
+Avatar.displayName = "ProfilePic";
 
-export default ProfilePic;
+export default Avatar;

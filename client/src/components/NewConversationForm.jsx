@@ -1,7 +1,7 @@
 import { useState } from "react";
 import convoService from "../services/convoService";
 
-const NewConvo = ({ close }) => {
+const NewConversationForm = ({ close }) => {
   const [title, setTitle] = useState("");
   const [users, setUsers] = useState([""]);
 
@@ -123,4 +123,4 @@ const NewConvo = ({ close }) => {
   );
 };
 
-export default NewConvo;
+export default NewConversationForm;

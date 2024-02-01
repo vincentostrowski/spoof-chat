@@ -1,12 +1,12 @@
+import SideBar from "../components/SideBar";
+import Conversation from "../components/Conversation";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase-config";
-import Conversations from "./Conversations";
-import Convo from "./Convo";
 import { useState, useContext, useEffect } from "react";
-import { SocketContext } from "../SocketProvider";
+import { SocketContext } from "../utils/SocketProvider";
 import { FiMenu } from "react-icons/fi";
 
-const MainApp = ({ setUser, setUserDoc }) => {
+const MainPage = ({ setUser, setUserDoc }) => {
   const [conversation, setConversation] = useState();
   const socket = useContext(SocketContext);
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(true);
@@ -28,7 +28,7 @@ const MainApp = ({ setUser, setUserDoc }) => {
 
   return (
     <div className="flex h-screen">
-      <Conversations
+      <SideBar
         setConversation={setConversation}
         className={`w-full lg:w-64 bg-gray-100 min-h-screen p-4 overflow-auto lg:block ${
           isMobileNavVisible ? "block" : "hidden"
@@ -50,7 +50,7 @@ const MainApp = ({ setUser, setUserDoc }) => {
         />
       </div>
       {conversation && (
-        <Convo
+        <Conversation
           conversation={conversation}
           className="flex-grow bg-white p-4 overflow-auto"
         />
@@ -59,4 +59,4 @@ const MainApp = ({ setUser, setUserDoc }) => {
   );
 };
 
-export default MainApp;
+export default MainPage;

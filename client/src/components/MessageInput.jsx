@@ -1,18 +1,18 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import Avatar from "./Avatar";
+import AvatarUploadsRow from "./AvatarUploadsRow";
+import AvatarBrowse from "./AvatarBrowse";
+import AvatarURLPaste from "./AvatarURLPaste";
 import messageService from "../services/messageService";
+import resizeProfilePic from "../utils/resizeProfilePic";
+import { useState, useEffect, useRef, useContext } from "react";
 import { UserDocContext } from "../App";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../config/firebase-config";
 import { getAuth } from "firebase/auth";
-import ProfilePic from "./ProfilePic";
-import ProfilePicSelector from "./ProfilePicSelector";
-import resizeProfilePic from "../services/resizeProfilePic";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
-import Browse from "./Browse";
-import PasteURL from "./PasteURL";
 
-const InputBox = ({ conversation, className }) => {
+const MessageInput = ({ conversation, className }) => {
   const [text, setText] = useState("");
   const user = useContext(UserDocContext);
   const [displayName, setDisplayName] = useState(user.username);
@@ -102,14 +102,14 @@ const InputBox = ({ conversation, className }) => {
   return (
     <div>
       {openBrowse && (
-        <Browse
+        <AvatarBrowse
           setUploaded={setUploaded}
           setAvatarURL={setAvatarURL}
           clasName="mb-30"
         />
       )}
       {openPasteURL && (
-        <PasteURL
+        <AvatarURLPaste
           setUploaded={setUploaded}
           setAvatarURL={setAvatarURL}
           setOpenPasteURL={setOpenPasteURL}
@@ -128,9 +128,9 @@ const InputBox = ({ conversation, className }) => {
                 required
               />
               {uploaded ? (
-                <ProfilePic avatarURL={avatarURL} className="w-20 h-20 m-2" />
+                <Avatar avatarURL={avatarURL} className="w-20 h-20 m-2" />
               ) : (
-                <ProfilePic
+                <Avatar
                   avatarURL={URL.createObjectURL(avatarURL)}
                   className="w-20 h-20 m-2"
                 />
@@ -201,7 +201,7 @@ const InputBox = ({ conversation, className }) => {
                   </button>
                 </div>
               </div>
-              <ProfilePicSelector
+              <AvatarUploadsRow
                 setUploaded={setUploaded}
                 setAvatarURL={setAvatarURL}
                 avatarURL={avatarURL}
@@ -226,4 +226,4 @@ const InputBox = ({ conversation, className }) => {
   );
 };
 
-export default InputBox;
+export default MessageInput;

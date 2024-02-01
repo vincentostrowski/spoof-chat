@@ -1,10 +1,10 @@
+import MainPage from "./views/MainPage";
+import AuthPage from "./views/AuthPage";
+import userService from "./services/userService";
 import { useEffect, useState, createContext } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebase-config";
-import MainApp from "./components/MainApp";
-import Auth from "./components/Auth";
-import userService from "./services/userService";
-import { SocketProvider } from "./SocketProvider.jsx";
+import { SocketProvider } from "./utils/SocketProvider.jsx";
 import logo from "./assets/SpoofLogo.png";
 
 export const UserDocContext = createContext();
@@ -58,12 +58,12 @@ function App() {
     return (
       <SocketProvider userId={userDoc.id}>
         <UserDocContext.Provider value={userDoc}>
-          <MainApp setUser={setUser} setUserDoc={setUserDoc} />
+          <MainPage setUser={setUser} setUserDoc={setUserDoc} />
         </UserDocContext.Provider>
       </SocketProvider>
     );
   } else if (user === null) {
-    return <Auth />;
+    return <AuthPage />;
   }
 }
 

@@ -1,8 +1,8 @@
-import ProfilePic from "./ProfilePic";
+import Avatar from "./Avatar";
 import { useContext } from "react";
 import { UserDocContext } from "../App";
 
-const ConvoOption = ({ convo }) => {
+const ConversationOption = ({ convo }) => {
   const userDoc = useContext(UserDocContext);
   const participants = convo.participants.filter(
     (participant) => participant.id !== userDoc.id
@@ -11,12 +11,12 @@ const ConvoOption = ({ convo }) => {
   return (
     <div className="flex items-center gap-4">
       <div className="flex items-center gap-3 relative">
-        <ProfilePic
+        <Avatar
           avatarURL={participants[0].profilePictureURL}
           className="h-5 w-5 absolute z-10 transform -translate-y-0.5"
         />
         {participants[1] ? (
-          <ProfilePic
+          <Avatar
             avatarURL={participants[1].profilePictureURL}
             className="h-5 w-5 absolute z-20 left-2 translate-y-0.5"
           />
@@ -29,4 +29,4 @@ const ConvoOption = ({ convo }) => {
   );
 };
 
-export default ConvoOption;
+export default ConversationOption;

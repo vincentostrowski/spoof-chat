@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-const PasteURL = ({ setUploaded, setAvatarURL, setOpenPasteURL }) => {
+const AvatarURLPaste = ({ setUploaded, setAvatarURL, setOpenPasteURL }) => {
   const [url, setUrl] = useState("");
   const popupRef = useRef();
 
@@ -41,4 +41,4 @@ const PasteURL = ({ setUploaded, setAvatarURL, setOpenPasteURL }) => {
   );
 };
 
-export default PasteURL;
+export default AvatarURLPaste;

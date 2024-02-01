@@ -1,4 +1,4 @@
-import ProfilePic from "./ProfilePic";
+import Avatar from "./Avatar";
 import { useState } from "react";
 
 const Message = ({ isUser, message, className }) => {
@@ -9,7 +9,7 @@ const Message = ({ isUser, message, className }) => {
     <div className="flex items-start">
       {isUser ? null : (
         <div className="h-full flex flex-col justify-end">
-          <ProfilePic className="w-12 h-12" avatarURL={message.avatarURL} />
+          <Avatar className="w-12 h-12" avatarURL={message.avatarURL} />
         </div>
       )}
       <div className="flex flex-col m-0 p-0">
@@ -34,7 +34,7 @@ const Message = ({ isUser, message, className }) => {
       </div>
       {isUser ? (
         <div className="h-full flex flex-col justify-end">
-          <ProfilePic className="w-12 h-12" avatarURL={message.avatarURL} />
+          <Avatar className="w-12 h-12" avatarURL={message.avatarURL} />
         </div>
       ) : null}
     </div>

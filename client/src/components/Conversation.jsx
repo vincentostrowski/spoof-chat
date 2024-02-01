@@ -1,12 +1,12 @@
+import Message from "./Message";
+import MessageInput from "./MessageInput";
 import messageService from "../services/messageService";
 import { useState, useEffect } from "react";
-import Message from "./Message";
-import InputBox from "./InputBox";
 import { useContext } from "react";
-import { SocketContext } from "../SocketProvider";
+import { SocketContext } from "../utils/SocketProvider";
 import { UserDocContext } from "../App";
 
-const Convo = ({ conversation, className }) => {
+const Conversation = ({ conversation, className }) => {
   const [messages, setMessages] = useState([]);
   const socket = useContext(SocketContext);
 
@@ -67,9 +67,9 @@ const Convo = ({ conversation, className }) => {
             );
           })}
       </ul>
-      <InputBox conversation={conversation} />
+      <MessageInput conversation={conversation} />
     </div>
   );
 };
 
-export default Convo;
+export default Conversation;
