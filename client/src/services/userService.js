@@ -22,12 +22,6 @@ const getUserFirebaseUID = async () => {
   });
 };
 
-//REFACTOR THESE TO USE FIREBASE AUTH TOKEN IN HEADER
-
-const getAll = () => {
-  return axios.get(baseUrl);
-};
-
 const update = async (id, newObject) => {
   const token = await auth.currentUser.getIdToken();
   const url = `${baseUrl}/${id}`;
@@ -36,15 +30,9 @@ const update = async (id, newObject) => {
   });
 };
 
-const remove = (id) => {
-  return axios.delete(`${baseUrl}/${id}`);
-};
-
 export default {
   getUser,
   getUserFirebaseUID,
-  getAll,
   create,
   update,
-  remove,
 };

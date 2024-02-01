@@ -2,7 +2,7 @@ require("./utils/firebaseAdmin");
 const express = require("express");
 const app = express();
 const http = require("http");
-const socket = require("./socket.js");
+const socket = require("./utils/socket.js");
 const server = http.createServer(app);
 socket.init(server);
 const cors = require("cors");

@@ -27,9 +27,6 @@ const Conversations = ({
         const returnedConvos = result.data;
         setConvos(returnedConvos);
 
-        //for each of these convos as well,
-        //join group using convo id
-        //this cannot be done on client side, so we
         returnedConvos.forEach((convo) => {
           socket.emit("join", `conversation-${convo.id}`);
         });

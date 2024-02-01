@@ -15,6 +15,8 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    //fetch the user doc
+    //set context api so that each document has access to this user doc
     const getUserDoc = async () => {
       if (user) {
         try {
@@ -27,8 +29,6 @@ function App() {
     };
 
     getUserDoc();
-    //fetch the user doc
-    //set context api so that each document has access to this user doc
   }, [user]);
 
   useEffect(() => {

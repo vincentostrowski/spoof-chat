@@ -10,8 +10,6 @@ const ProfilePicSelector = ({
   setDisplayName,
   user,
 }) => {
-  //and public/shared pics
-  //offer search bar for brining up public ones that match query
   const [avatarURLs, setAvatarURLs] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [names, setNames] = useState({});

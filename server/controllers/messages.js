@@ -1,5 +1,5 @@
 const Message = require("../models/message");
-const io = require("../socket.js").getIO();
+const io = require("../utils/socket.js").getIO();
 
 const getMessages = async (req, res) => {
   const conversationId = req.params.id;

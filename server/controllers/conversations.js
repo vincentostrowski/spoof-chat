@@ -1,29 +1,51 @@
 const Conversation = require("../models/conversation");
 const User = require("../models/user");
 const mongoose = require("mongoose");
-const io = require("../socket.js").getIO();
+const io = require("../utils/socket.js").getIO();
 //get reference map of user sockets to add new convo rooms
-const users = require("../socket.js").getUsers();
+const users = require("../utils/socket.js").getUsers();
 
+const findUserByUsername = async (username) => {
+  const user = await User.findOne({ username });
+  if (!user) {
+    throw new Error(`User ${username} not found`);
+  }
+  return user;
+};
+
+const createNewConversation = async (participants, owner, name, session) => {
+  const newConvo = {
+    participants,
+    groupInfo: { owner, name },
+  };
+  const convo = new Conversation(newConvo);
+  return await convo.save({ session });
+};
+
+const updateUserConversations = async (userId, conversationId, session) => {
+  const userDoc = await User.findById(userId);
+  userDoc.conversations = userDoc.conversations.concat(conversationId);
+  await userDoc.save({ session });
+};
+
+const joinUserToConversation = (userId, conversationId) => {
+  const userSocket = users[userId];
+  if (userSocket) {
+    userSocket.join(`conversation-${conversationId}`);
+  }
+};
+
+// Endpoint to create a new conversation using above helper functions
 const createConversation = async (req, res) => {
   const body = req.body;
   const participants = [req.user._id];
 
-  if (body.participants.length === 1) {
-    let user = await User.findOne({ username: body.participants[0] });
-    if (user) {
-      body.name = user.username;
-    } else {
-      return res.status(404).json({ error: `User not found` });
-    }
-  }
-
   for (let username of body.participants) {
-    let user = await User.findOne({ username: username });
-    if (user) {
+    try {
+      const user = await findUserByUsername(username);
       participants.push(user._id);
-    } else {
-      return res.status(404).json({ error: `User ${username} not found` });
+    } catch (error) {
+      return res.status(404).json({ error: error.message });
     }
   }
 
@@ -31,24 +53,16 @@ const createConversation = async (req, res) => {
   session.startTransaction();
 
   try {
-    const newConvo = {
+    const savedConvo = await createNewConversation(
       participants,
-      groupInfo: { owner: req.user._id, name: body.name },
-    };
-
-    const convo = new Conversation(newConvo);
-    const savedConvo = await convo.save({ session });
+      req.user._id,
+      body.name,
+      session
+    );
 
     for (let userId of participants) {
-      const userDoc = await User.findById(userId);
-      userDoc.conversations = userDoc.conversations.concat(savedConvo._id);
-      await userDoc.save({ session });
-
-      //were trying to get the socket per participant so we can add them to room
-      const userSocket = users[userId];
-      if (userSocket) {
-        userSocket.join(`conversation-${savedConvo._id}`);
-      }
+      await updateUserConversations(userId, savedConvo._id, session);
+      joinUserToConversation(userId, savedConvo._id);
     }
 
     await session.commitTransaction();

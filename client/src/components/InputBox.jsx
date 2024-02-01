@@ -16,7 +16,7 @@ const InputBox = ({ conversation, className }) => {
   const [text, setText] = useState("");
   const user = useContext(UserDocContext);
   const [displayName, setDisplayName] = useState(user.username);
-  //this initializes to the stored firebase link of user profilepic
+  //Initializes to the stored firebase link of user profilepic,
   //eventually getting passed to profile pic which fetches from firebae
   const [avatarURL, setAvatarURL] = useState(user.profilePictureURL);
   const [uploaded, setUploaded] = useState(true);
@@ -33,8 +33,6 @@ const InputBox = ({ conversation, className }) => {
     }
   }, [text]);
 
-  //remember, we are uploading file to firebase,
-  //then with the returned link from the upload, storing it in the model
   const onSubmit = async (e) => {
     e.preventDefault();
     if (text === "") return;
@@ -62,7 +60,6 @@ const InputBox = ({ conversation, className }) => {
   };
 
   //Uploads given picture to firebase and returns url to be used.
-  //100x100 since these will only be used as message images
   const uploadPicFirebase = async (avatarURL) => {
     if (avatarURL) {
       const user = getAuth().currentUser;
@@ -97,27 +94,6 @@ const InputBox = ({ conversation, className }) => {
     setAvatarURL(newFile);
     setUploaded(false);
   };
-
-  // if all URLS the same, no need to fetch them from firebase.
-  // should all be numbered 0-9
-
-  // have function that's called at the end of fileChange
-  // move the fetching of avatarURL from firebase here, in a useEffect, w/ [uploaded]
-  // hold a state for avatarURLs here and pass this to profilePicSelector
-  // maybe have profile selector open at all times
-  // 'browse' should open public searchable pics
-  // when avatarURLs == 10, notify user of limit and need to replace
-  //        "You have 10 images stored already, outlie indicates which image will be replaced on send"
-
-  // ProfilePicSelector should then chage to indicate the profilePic that will be replaced on submit
-  // user can change this by clicking to set the outline on what will be replaced on send
-
-  // add option to delete all messages using that certain profile pic? as they may be pointless to user now
-  //
-
-  /* const checkAvatarLimit = () => {
-    if 
-  } */
 
   const handleEmojiSelect = (emoji) => {
     setText((prevText) => prevText + emoji.native);

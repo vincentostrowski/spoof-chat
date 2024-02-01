@@ -15,14 +15,10 @@ const UpdateProfile = ({ close }) => {
   const [username, setUsername] = useState(userDoc.username);
   const [onFirebase, setOnFirebase] = useState(true);
 
-  //allow the ProfilePic in this form to update when changed file
-  //allow user to crop profilePic within the form
   const uploadPicFirebase = async (profilePicture) => {
     if (profilePicture) {
       const user = getAuth().currentUser;
 
-      //figure out best way to store the user's profile pics in firebase
-      //in their own folder, or should they all be shared?
       const storageRef = ref(
         storage,
         `profilePictures/${user.uid}/profilePicture`
