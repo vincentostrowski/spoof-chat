@@ -1,5 +1,6 @@
 import AvatarBrowseRow from "./AvatarBrowseRow";
 
+// Component displays rows of profile picture options user can select
 const AvatarBrowse = ({ className, setUploaded, setAvatarURL }) => {
   return (
     <div className="flex justify-center h-40 inline-block rounded-t-xl">

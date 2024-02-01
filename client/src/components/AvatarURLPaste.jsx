@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 
+// Component allows user to paste image URLs to be used as profile pictures
 const AvatarURLPaste = ({ setUploaded, setAvatarURL, setOpenPasteURL }) => {
   const [url, setUrl] = useState("");
   const popupRef = useRef();
 
+  // Add listener to close popup when user clicks outside of it
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (popupRef.current && !popupRef.current.contains(event.target)) {

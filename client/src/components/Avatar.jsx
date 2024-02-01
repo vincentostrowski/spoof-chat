@@ -1,5 +1,6 @@
 import { memo } from "react";
 
+// Component displays a profile picture
 const Avatar = memo(({ avatarURL, className }) => {
   const style = avatarURL
     ? {

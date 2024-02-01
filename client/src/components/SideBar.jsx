@@ -5,7 +5,7 @@ import NewConversationForm from "./NewConversationForm";
 import convoService from "../services/convoService";
 import { useEffect, useState, useContext } from "react";
 import { UserDocContext } from "../App";
-import { SocketContext } from "../utils/SocketProvider";
+import { SocketContext } from "../contexts/SocketProvider";
 import logo from "../assets/SpoofLogo.png";
 
 const SideBar = ({
@@ -20,6 +20,7 @@ const SideBar = ({
   const userDoc = useContext(UserDocContext);
   const socket = useContext(SocketContext);
 
+  // Fetch all conversations a user is in and join their rooms for real time updates
   useEffect(() => {
     const fetchConvos = async () => {
       try {
@@ -38,6 +39,7 @@ const SideBar = ({
     fetchConvos();
   }, []);
 
+  // Listen for new conversations
   useEffect(() => {
     const handleNewConvo = (newConvo) => {
       setConvos((convos) => [...convos, newConvo]);

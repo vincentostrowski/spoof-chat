@@ -29,12 +29,9 @@ const checkFirebaseToken = async (req, res, next) => {
   }
 
   const token = authorizationHeader.split("Bearer ")[1];
-
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
-
-    const user = await User.findOne({ firebaseId: decodedToken.uid });
-
+    const user = await User.findOne({ fireBaseId: decodedToken.uid });
     if (!user) {
       return res.status(404).send("User not found in MongoDB.");
     }
