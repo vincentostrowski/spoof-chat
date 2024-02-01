@@ -3,7 +3,7 @@ import Conversation from "../components/Conversation";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase-config";
 import { useState, useContext, useEffect } from "react";
-import { SocketContext } from "../utils/SocketProvider";
+import { SocketContext } from "../contexts/SocketProvider";
 import { FiMenu } from "react-icons/fi";
 
 const MainPage = ({ setUser, setUserDoc }) => {
@@ -11,6 +11,7 @@ const MainPage = ({ setUser, setUserDoc }) => {
   const socket = useContext(SocketContext);
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(true);
 
+  // Listen for updated user info from UpdateProfileForm in SideBar
   useEffect(() => {
     const handleUpdateProfile = async (updatedUser) => {
       setUserDoc(updatedUser);

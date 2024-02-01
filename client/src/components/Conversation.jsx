@@ -3,13 +3,15 @@ import MessageInput from "./MessageInput";
 import messageService from "../services/messageService";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
-import { SocketContext } from "../utils/SocketProvider";
+import { SocketContext } from "../contexts/SocketProvider";
 import { UserDocContext } from "../App";
 
+// Component displaying currently selected conversation
 const Conversation = ({ conversation, className }) => {
   const [messages, setMessages] = useState([]);
   const socket = useContext(SocketContext);
 
+  // Listen for new messages
   useEffect(() => {
     const handleNewMessage = (newMessage) => {
       setMessages((currentMessages) => [...currentMessages, newMessage]);
@@ -20,6 +22,7 @@ const Conversation = ({ conversation, className }) => {
     };
   }, [conversation]);
 
+  // Fetch messages for conversation
   useEffect(() => {
     const loadMessages = async () => {
       const { data } = await messageService.getAll(conversation.id);
@@ -33,6 +36,7 @@ const Conversation = ({ conversation, className }) => {
     };
   }, [conversation.id]);
 
+  // Remove user from participants to display other participant's username
   const userDoc = useContext(UserDocContext);
   const participants = conversation.participants.filter(
     (participant) => participant.id !== userDoc.id

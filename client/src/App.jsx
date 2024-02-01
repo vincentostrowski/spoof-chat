@@ -4,7 +4,7 @@ import userService from "./services/userService";
 import { useEffect, useState, createContext } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./config/firebase-config";
-import { SocketProvider } from "./utils/SocketProvider.jsx";
+import { SocketProvider } from "./contexts/SocketProvider.jsx";
 import logo from "./assets/SpoofLogo.png";
 
 export const UserDocContext = createContext();

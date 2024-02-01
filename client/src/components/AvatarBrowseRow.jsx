@@ -3,10 +3,12 @@ import { storage } from "../config/firebase-config";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { useEffect, useState } from "react";
 
+// Component displays profile picture options user can select
 const AvatarBrowseRow = ({ setUploaded, setAvatarURL, category }) => {
   const [avatarURLs, setAvatarURLs] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
+  // Fetch profile pictures from firebase storage
   useEffect(() => {
     const getAvatars = async () => {
       const storageRef = ref(storage, `profilePictures/${category}`);

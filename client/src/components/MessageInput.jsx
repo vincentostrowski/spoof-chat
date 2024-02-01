@@ -12,6 +12,7 @@ import { getAuth } from "firebase/auth";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 
+// Component containing all message related inputs
 const MessageInput = ({ conversation, className }) => {
   const [text, setText] = useState("");
   const user = useContext(UserDocContext);

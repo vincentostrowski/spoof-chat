@@ -2,6 +2,7 @@ import Avatar from "./Avatar";
 import { useState } from "react";
 
 const Message = ({ isUser, message, className }) => {
+  // Used to determine if message should reveal username of sender
   const [isHovered, setIsHovered] = useState(false);
   const ownDisplayName = message.displayName === "&3kd&3bdDblp8319";
 

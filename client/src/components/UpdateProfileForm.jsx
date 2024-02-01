@@ -15,6 +15,7 @@ const UpdateProfileForm = ({ close }) => {
   const [username, setUsername] = useState(userDoc.username);
   const [onFirebase, setOnFirebase] = useState(true);
 
+  // Upload profile picture to firebase storage
   const uploadPicFirebase = async (profilePicture) => {
     if (profilePicture) {
       const user = getAuth().currentUser;
@@ -52,6 +53,7 @@ const UpdateProfileForm = ({ close }) => {
     }
   };
 
+  // Handle file input change and validate file size
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     const maxSize = 1 * 1024 * 1024; // 1MB

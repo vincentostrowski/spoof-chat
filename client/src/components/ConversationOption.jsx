@@ -2,6 +2,7 @@ import Avatar from "./Avatar";
 import { useContext } from "react";
 import { UserDocContext } from "../App";
 
+// Component for a single conversation item in sidebar list
 const ConversationOption = ({ convo }) => {
   const userDoc = useContext(UserDocContext);
   const participants = convo.participants.filter(

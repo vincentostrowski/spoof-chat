@@ -3,6 +3,8 @@ import { storage } from "../config/firebase-config";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { useEffect, useState } from "react";
 
+// Component display user's previously uploaded profile pics
+// These may be selected and used again
 const AvatarUploadsRow = ({
   setUploaded,
   setAvatarURL,
@@ -14,6 +16,7 @@ const AvatarUploadsRow = ({
   const [loaded, setLoaded] = useState(false);
   const [names, setNames] = useState({});
 
+  // Get user's previously uploaded avatars
   useEffect(() => {
     const getAvatars = async () => {
       const storageRef = ref(storage, `profilePictures/${user.firebaseId}`);
