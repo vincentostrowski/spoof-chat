@@ -24,3 +24,9 @@ Welcome to Spoof, a unique messaging platform that brings humor to your conversa
 - Tailwind
 - Socket.io
 - Firebase Auth
+
+## Try it out: 
+https://split-chat.vercel.app/
+
+### Important Notice About Load Times
+Please note that this project is hosted on a platform that automatically spins down the backend services during periods of inactivity. As a result, the initial load time may be longer than usual.
