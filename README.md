@@ -2,7 +2,8 @@
 
 Welcome to Spoof, a unique messaging platform that brings humor to your conversations by allowing you to parody various individuals. With Spoof, you can send each message with distinct profile pictures and usernames, crafting conversations that appear to come from different individuals, be it celebrities, athletes, etc.
 
-![image](https://github.com/vincentostrowski/spoof-chat/assets/92182422/80f40c15-314c-4cb8-bf64-1a3d570af7bd)
+![SpoofDemo](https://github.com/vincentostrowski/spoof-chat/assets/92182422/a0597c3f-107b-43c5-9ad9-beb9da1788f7)
+
 
 ## Features
 
@@ -24,3 +25,9 @@ Welcome to Spoof, a unique messaging platform that brings humor to your conversa
 - Tailwind
 - Socket.io
 - Firebase Auth
+
+## Try it out: 
+https://split-chat.vercel.app/
+
+### Important Notice About Load Times
+Please note that this project is hosted on a platform that automatically spins down the backend services during periods of inactivity. As a result, the initial load time may be longer than usual.
