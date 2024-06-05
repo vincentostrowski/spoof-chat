@@ -14,6 +14,9 @@ const findUserByUsername = async (username) => {
 };
 
 const createNewConversation = async (participants, owner, name, session) => {
+  if (!name.trim()) {
+    name = "private";
+  }
   const newConvo = {
     participants,
     groupInfo: { owner, name },
